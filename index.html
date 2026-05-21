@@ -4,252 +4,358 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Дневник — Моя Школа</title>
+    <title>Моя Школа — Дневник</title>
     <style>
         :root {
-            --primary-color: #1e3a8a;
-            --secondary-color: #3b82f6;
-            --bg-color: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-color: #1f2937;
+            --bg-main: #121214;
+            --bg-card: #1e1e22;
+            --text-primary: #ffffff;
+            --text-secondary: #8e8e93;
+            --accent-blue: #3b82f6;
+            --accent-red: #ff453a;
+            --badge-bg: #2c2c30;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
             margin: 0;
             padding: 0;
+            padding-bottom: 80px; /* Отступ под нижнее меню */
+            -webkit-font-smoothing: antialiased;
         }
 
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 15px;
-            text-align: center;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.4rem;
-        }
-
-        .user-info {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-top: 5px;
-        }
-
-        .nav-tabs {
-            display: flex;
-            justify-content: space-around;
-            background: var(--card-bg);
-            margin: 15px;
-            padding: 5px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .tab-btn {
-            background: none;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: #6b7280;
-            cursor: pointer;
-            width: 50%;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-        .tab-btn.active {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-
-        .content-section {
-            display: none;
-            padding: 0 15px 30px 15px;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-
-        .card h2 {
-            margin-top: 0;
-            font-size: 1.1rem;
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--bg-color);
-            padding-bottom: 5px;
-        }
-
-        .row {
+        /* Шапка профиля */
+        .header {
+            padding: 20px 16px 10px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #f3f4f6;
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .profile-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+        .profile-role {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+        .notification-icon {
+            font-size: 1.3rem;
+            cursor: pointer;
         }
 
-        .row:last-child {
-            border-bottom: none;
-        }
-
-        .time {
-            font-size: 0.8rem;
-            color: #6b7280;
-            margin-right: 10px;
-        }
-
-        .subject {
-            flex-grow: 1;
-            font-weight: 500;
-        }
-
-        .grade {
-            background: #e0f2fe;
-            color: #0369a1;
-            font-weight: bold;
-            padding: 4px 10px;
-            border-radius: 6px;
-            min-width: 15px;
+        /* Календарная неделя */
+        .calendar-week {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 16px;
             text-align: center;
         }
+        .day-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 40px;
+        }
+        .day-name {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+        .day-number {
+            font-size: 1rem;
+            font-weight: 600;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .day-column.active .day-number {
+            background-color: var(--accent-blue);
+            color: white;
+        }
+        .day-column.weekend .day-number {
+            color: var(--accent-red);
+        }
 
-        .grade.excellent { background: #dcfce7; color: #15803d; }
-        .grade.good { background: #fef9c3; color: #a16207; }
-        .grade.bad { background: #fee2e2; color: #b91c1c; }
+        /* Фильтры и кнопки действий */
+        .controls-row {
+            display: flex;
+            gap: 8px;
+            padding: 10px 16px;
+            overflow-x: auto;
+        }
+        .btn-filter {
+            background-color: var(--bg-card);
+            border: none;
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .btn-icon {
+            background-color: var(--bg-card);
+            border: none;
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
 
-        .gpa {
+        /* Список расписания */
+        .schedule-container {
+            padding: 10px 16px;
+        }
+
+        /* Карточка урока */
+        .lesson-card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 16px;
+            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .lesson-meta {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+        .lesson-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin: 0 0 14px 0;
+            color: #d1d1d6;
+        }
+        .homework-box {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
             font-size: 0.85rem;
-            color: #6b7280;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+        .homework-icon {
+            font-size: 1rem;
+            margin-top: 1px;
+        }
+        .homework-text {
+            color: #a9a9b0;
+        }
+        /* Значок отсутствия или оценки */
+        .status-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background-color: var(--badge-bg);
+            color: #aeaeae;
+            font-weight: 700;
+            font-size: 0.9rem;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        /* Перемена */
+        .recess-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .recess-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Нижнее меню навигации */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #1c1c1e;
+            border-top: 1px solid #2c2c2e;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px)) 0;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.65rem;
+            gap: 5px;
+            background: none;
+            border: none;
+            width: 20%;
+        }
+        .nav-item.active {
+            color: var(--text-primary);
+        }
+        .nav-icon {
+            font-size: 1.3rem;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Электронный Дневник</h1>
-        <div class="user-info">Иван Иванов • 8 «А» класс</div>
-    </header>
-
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('schedule')">🗓️ Расписание</button>
-        <button class="tab-btn" onclick="switchTab('grades')">📊 Оценки</button>
+    <!-- Шапка профиля -->
+    <div class="header">
+        <div class="profile-info">
+            <span class="profile-name">Артём Рубцов</span>
+            <span class="profile-role">Ученик</span>
+        </div>
+        <div class="notification-icon">🔔</div>
     </div>
 
-    <!-- СЕКЦИЯ: РАСПИСАНИЕ -->
-    <div id="schedule" class="content-section active">
-        <div class="card">
-            <h2>Понедельник</h2>
-            <div class="row">
-                <span class="time">08:30</span>
-                <span class="subject">Русский язык</span>
-                <span class="grade">Каб. 204</span>
-            </div>
-            <div class="row">
-                <span class="time">09:25</span>
-                <span class="subject">Алгебра</span>
-                <span class="grade">Каб. 312</span>
-            </div>
-            <div class="row">
-                <span class="time">10:30</span>
-                <span class="subject">Физика</span>
-                <span class="grade">Каб. 102</span>
-            </div>
+    <!-- Календарь на неделю -->
+    <div class="calendar-week">
+        <div class="day-column">
+            <span class="day-name">Пн</span>
+            <span class="day-number">18</span>
         </div>
-
-        <div class="card">
-            <h2>Вторник</h2>
-            <div class="row">
-                <span class="time">08:30</span>
-                <span class="subject">Литература</span>
-                <span class="grade">Каб. 204</span>
-            </div>
-            <div class="row">
-                <span class="time">09:25</span>
-                <span class="subject">История</span>
-                <span class="grade">Каб. 401</span>
-            </div>
-            <div class="row">
-                <span class="time">10:30</span>
-                <span class="subject">Физкультура</span>
-                <span class="grade">Спортзал</span>
-            </div>
+        <div class="day-column">
+            <span class="day-name">Вт</span>
+            <span class="day-number">19</span>
+        </div>
+        <div class="day-column">
+            <span class="day-name">Ср</span>
+            <span class="day-number">20</span>
+        </div>
+        <div class="day-column active">
+            <span class="day-name">Чт</span>
+            <span class="day-number">21</span>
+        </div>
+        <div class="day-column">
+            <span class="day-name">Пт</span>
+            <span class="day-number">22</span>
+        </div>
+        <div class="day-column">
+            <span class="day-name">Сб</span>
+            <span class="day-number">23</span>
+        </div>
+        <div class="day-column weekend">
+            <span class="day-name">Вс</span>
+            <span class="day-number">24</span>
         </div>
     </div>
 
-    <!-- СЕКЦИЯ: ОЦЕНКИ -->
-    <div id="grades" class="content-section">
-        <div class="card">
-            <h2>Текущие оценки</h2>
-            
-            <div class="row">
-                <div>
-                    <div class="subject">Алгебра</div>
-                    <div class="gpa">Ср. балл: 4.00</div>
-                </div>
-                <div>
-                    <span class="grade good">4</span>
-                    <span class="grade excellent">5</span>
-                    <span class="grade bad">3</span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div>
-                    <div class="subject">Русский язык</div>
-                    <div class="gpa">Ср. балл: 4.50</div>
-                </div>
-                <div>
-                    <span class="grade excellent">5</span>
-                    <span class="grade good">4</span>
-                    <span class="grade excellent">5</span>
-                </div>
-            </div>
-
-            <div class="row">
-                <div>
-                    <div class="subject">Физика</div>
-                    <div class="gpa">Ср. балл: 3.50</div>
-                </div>
-                <div>
-                    <span class="grade bad">3</span>
-                    <span class="grade good">4</span>
-                </div>
-            </div>
-            
-        </div>
+    <!-- Управляющие кнопки -->
+    <div class="controls-row">
+        <button class="btn-filter">Май</button>
+        <button class="btn-filter">Вид</button>
+        <button class="btn-icon" style="margin-left: auto;">📤</button>
+        <button class="btn-icon">🎛️</button>
+        <button class="btn-icon">➕</button>
     </div>
 
-    <script>
-        function switchTab(tabId) {
-            // Скрываем все секции
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            // Убираем активный класс у кнопок
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Показываем нужную секцию и активируем кнопку
-            document.getElementById(tabId).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-    </script>
+    <!-- Список уроков -->
+    <div class="schedule-container">
+        
+        <!-- УРОК 1 -->
+        <div class="lesson-card">
+            <div class="lesson-meta">
+                <span>1 урок</span>
+                <span>08:00 – 08:40</span>
+                <span>каб. 1008</span>
+            </div>
+            <h2 class="lesson-title">География</h2>
+            <div class="homework-box">
+                <span class="homework-icon">🏠</span>
+                <span class="homework-text"><b>Домашнее задание</b><br>§ 28 прочитать, вопросы устно. САМОСТОЯТЕЛЬНО (без интернета) напис...</span>
+            </div>
+            <div class="status-badge">Н</div>
+        </div>
+
+        <!-- ПЕРЕМЕНА -->
+        <div class="recess-line">
+            <span class="recess-title">🏃 Перемена 10 минут</span>
+            <span>08:40–08:50</span>
+        </div>
+
+        <!-- УРОК 2 -->
+        <div class="lesson-card">
+            <div class="lesson-meta">
+                <span>2 урок</span>
+                <span>08:50 – 09:30</span>
+                <span>каб. 1007</span>
+            </div>
+            <h2 class="lesson-title">Литература</h2>
+            <div class="homework-box">
+                <span class="homework-icon">🏠</span>
+                <span class="homework-text">Домашнее задание не задано</span>
+            </div>
+            <div class="status-badge">Н</div>
+        </div>
+
+        <!-- ПЕРЕМЕНА -->
+        <div class="recess-line">
+            <span class="recess-title">🏃 Перемена 20 минут</span>
+            <span>09:30–09:50</span>
+        </div>
+
+        <!-- УРОК 3 -->
+        <div class="lesson-card">
+            <div class="lesson-meta">
+                <span>3 урок</span>
+                <span>09:50 – 10:30</span>
+                <span>каб. 3024</span>
+            </div>
+            <h2 class="lesson-title">Математика</h2>
+            <div class="homework-box">
+                <span class="homework-icon">🏠</span>
+                <span class="homework-text">Домашнее задание не задано</span>
+            </div>
+            <div class="status-badge">Н</div>
+        </div>
+
+    </div>
+
+    <!-- Нижнее меню навигации -->
+    <div class="bottom-nav">
+        <button class="nav-item active">
+            <span class="nav-icon">📋</span>
+            <span>Расписание</span>
+        </button>
+        <button class="nav-item">
+            <span class="nav-icon">⭐</span>
+            <span>Оценки</span>
+        </button>
+        <button class="nav-item">
+            <span class="nav-icon">✅</span>
+            <span>Задания</span>
+        </button>
+        <button class="nav-item">
+            <span class="nav-icon">🏫</span>
+            <span>Школа</span>
+        </button>
+        <button class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Профиль</span>
+        </button>
+    </div>
+
 </body>
 </html>
