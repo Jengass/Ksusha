@@ -1,1 +1,255 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой Дневник — Моя Школа</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #3b82f6;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+
+        .user-info {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            background: var(--card-bg);
+            margin: 15px;
+            padding: 5px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #6b7280;
+            cursor: pointer;
+            width: 50%;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+            padding: 0 15px 30px 15px;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 5px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .time {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-right: 10px;
+        }
+
+        .subject {
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        .grade {
+            background: #e0f2fe;
+            color: #0369a1;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 6px;
+            min-width: 15px;
+            text-align: center;
+        }
+
+        .grade.excellent { background: #dcfce7; color: #15803d; }
+        .grade.good { background: #fef9c3; color: #a16207; }
+        .grade.bad { background: #fee2e2; color: #b91c1c; }
+
+        .gpa {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Электронный Дневник</h1>
+        <div class="user-info">Иван Иванов • 8 «А» класс</div>
+    </header>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('schedule')">🗓️ Расписание</button>
+        <button class="tab-btn" onclick="switchTab('grades')">📊 Оценки</button>
+    </div>
+
+    <!-- СЕКЦИЯ: РАСПИСАНИЕ -->
+    <div id="schedule" class="content-section active">
+        <div class="card">
+            <h2>Понедельник</h2>
+            <div class="row">
+                <span class="time">08:30</span>
+                <span class="subject">Русский язык</span>
+                <span class="grade">Каб. 204</span>
+            </div>
+            <div class="row">
+                <span class="time">09:25</span>
+                <span class="subject">Алгебра</span>
+                <span class="grade">Каб. 312</span>
+            </div>
+            <div class="row">
+                <span class="time">10:30</span>
+                <span class="subject">Физика</span>
+                <span class="grade">Каб. 102</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Вторник</h2>
+            <div class="row">
+                <span class="time">08:30</span>
+                <span class="subject">Литература</span>
+                <span class="grade">Каб. 204</span>
+            </div>
+            <div class="row">
+                <span class="time">09:25</span>
+                <span class="subject">История</span>
+                <span class="grade">Каб. 401</span>
+            </div>
+            <div class="row">
+                <span class="time">10:30</span>
+                <span class="subject">Физкультура</span>
+                <span class="grade">Спортзал</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- СЕКЦИЯ: ОЦЕНКИ -->
+    <div id="grades" class="content-section">
+        <div class="card">
+            <h2>Текущие оценки</h2>
+            
+            <div class="row">
+                <div>
+                    <div class="subject">Алгебра</div>
+                    <div class="gpa">Ср. балл: 4.00</div>
+                </div>
+                <div>
+                    <span class="grade good">4</span>
+                    <span class="grade excellent">5</span>
+                    <span class="grade bad">3</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <div class="subject">Русский язык</div>
+                    <div class="gpa">Ср. балл: 4.50</div>
+                </div>
+                <div>
+                    <span class="grade excellent">5</span>
+                    <span class="grade good">4</span>
+                    <span class="grade excellent">5</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div>
+                    <div class="subject">Физика</div>
+                    <div class="gpa">Ср. балл: 3.50</div>
+                </div>
+                <div>
+                    <span class="grade bad">3</span>
+                    <span class="grade good">4</span>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabId) {
+            // Скрываем все секции
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Убираем активный класс у кнопок
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Показываем нужную секцию и активируем кнопку
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
