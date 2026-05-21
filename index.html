@@ -4,265 +4,473 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JungleShop — Магазин комнатных растений</title>
+    <title>HomeBerry — Маркетплейс товаров для дома</title>
     <style>
-        /* Общие стили */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
         body {
-            background-color: #f7f9f6;
-            color: #2c3e2b;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            background-color: #f6f6f9;
+            color: #333;
         }
 
-        /* Шапка сайта */
+        /* Шапка в стиле маркетплейса */
         header {
-            background: #ffffff;
-            padding: 20px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background: linear-gradient(135deg, #cb11ab 0%, #481173 100%);
+            color: white;
+            padding: 15px 20px;
             position: sticky;
             top: 0;
             z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .header-box {
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px;
         }
+
         .logo {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
-            color: #1b4332;
+            letter-spacing: 1px;
+            cursor: pointer;
         }
-        .cart-status {
-            background: #1b4332;
+
+        .search-bar {
+            flex-grow: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .cart-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
             color: white;
             padding: 10px 20px;
             border-radius: 20px;
-            font-weight: bold;
-        }
-
-        /* Первый экран (Промо) */
-        .hero {
-            background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%);
-            padding: 80px 0;
-            text-align: center;
-        }
-        .hero h1 {
-            font-size: 42px;
-            color: #1b4332;
-            margin-bottom: 15px;
-        }
-        .hero p {
-            font-size: 18px;
-            margin-bottom: 25px;
-            color: #40916c;
-        }
-        .btn {
-            display: inline-block;
-            background: #1b4332;
-            color: white;
-            padding: 12px 30px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: 0.3s;
-            border: none;
             cursor: pointer;
-        }
-        .btn:hover {
-            background: #2d6a4f;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
         }
 
-        /* Каталог товаров */
-        .catalog {
-            padding: 60px 0;
+        .cart-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
-        .catalog h2 {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 32px;
-            color: #1b4332;
+
+        .cart-count {
+            background-color: #f2453b;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
         }
-        .products-grid {
+
+        /* Главный контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: 250px 1fr;
             gap: 30px;
         }
+
+        /* Боковое меню (Фильтры) */
+        .sidebar {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            height: fit-content;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .sidebar h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #481173;
+        }
+
+        .filter-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 10px 5px;
+            font-size: 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: #cb11ab;
+            font-weight: bold;
+            padding-left: 10px;
+        }
+
+        /* Сетка товаров */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
         .product-card {
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: 0.3s;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s;
+            position: relative;
         }
+
         .product-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        .product-img {
-            width: 100%;
-            height: 250px;
-            background-color: #e9ecef;
+
+        /* Заглушка для фото (цветной блок, имитирующий фото товара) */
+        .product-img-placeholder {
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 50px;
+            font-size: 40px;
+            background-color: #eaeaea;
         }
+
         .product-info {
-            padding: 20px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
         }
-        .product-title {
+
+        .product-price {
             font-size: 20px;
-            margin-bottom: 10px;
-            color: #1b4332;
+            font-weight: bold;
+            color: #111;
+            margin-bottom: 5px;
         }
-        .product-desc {
+
+        .product-title {
             font-size: 14px;
             color: #666;
             margin-bottom: 15px;
-            height: 40px;
-            overflow: hidden;
+            line-height: 1.3;
+            flex-grow: 1;
         }
-        .product-meta {
-            font-size: 12px;
-            color: #40916c;
-            margin-bottom: 15px;
+
+        .add-to-cart {
+            background-color: #cb11ab;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
             font-weight: 600;
+            width: 100%;
+            transition: 0.2s;
         }
-        .product-bottom {
+
+        .add-to-cart:hover {
+            background-color: #a80e8e;
+        }
+
+        /* Модальное окно Корзины */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 200;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .cart-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        .product-price {
-            font-size: 22px;
-            font-weight: bold;
-            color: #1b4332;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
         }
 
-        /* Футер */
-        footer {
-            background: #1b4332;
+        .cart-total {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .checkout-btn {
+            background: #481173;
             color: white;
-            padding: 30px 0;
-            text-align: center;
-            margin-top: 40px;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* Адаптивность для мобилок */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: flex;
+                overflow-x: auto;
+                gap: 10px;
+                padding: 10px;
+            }
+            .filter-btn {
+                border: 1px solid #ccc;
+                border-radius: 15px;
+                padding: 5px 15px;
+                white-space: nowrap;
+            }
+            .search-bar {
+                display: none; /* Упростим для мобильных */
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Шапка -->
+    <!-- Шапка сайта -->
     <header>
-        <div class="container header-box">
-            <div class="logo">🌿 JungleShop</div>
-            <div class="cart-status" id="cart-status">Корзина: 0 руб.</div>
+        <div class="header-container">
+            <div class="logo" onclick="filterCategory('all')">HomeBerry</div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Я ищу мебель, растения, декор..." oninput="searchProducts()">
+            </div>
+            <button class="cart-btn" onclick="toggleCart(true)">
+                🛒 Корзина <span class="cart-count" id="cartCount">0</span>
+            </button>
         </div>
     </header>
 
-    <!-- Промо-блок -->
-    <section class="hero">
-        <div class="container">
-            <h1>Превратите вашу комнату в стильные джунгли</h1>
-            <p>Редкие комнатные растения с гарантией здоровья каждого листа</p>
-            <a href="#catalog" class="btn">Смотреть каталог</a>
-        </div>
-    </section>
+    <!-- Основной контент -->
+    <div class="container">
+        <!-- Боковой фильтр -->
+        <aside class="sidebar">
+            <h3>Категории</h3>
+            <button class="filter-btn active" onclick="filterCategory('all', this)">Все товары</button>
+            <button class="filter-btn" onclick="filterCategory('plants', this)">Растения</button>
+            <button class="filter-btn" onclick="filterCategory('furniture', this)">Мебель</button>
+            <button class="filter-btn" onclick="filterCategory('decor', this)">Декор и свет</button>
+        </aside>
 
-    <!-- Каталог -->
-    <section class="catalog" id="catalog">
-        <div class="container">
-            <h2>Наши растения</h2>
-            <div class="products-grid">
-                
-                <!-- Товар 1 -->
-                <div class="product-card">
-                    <div class="product-img">🌱</div>
-                    <div class="product-info">
-                        <div class="product-title">Монстера Альба</div>
-                        <div class="product-desc">Редкое растение с уникальными белыми пятнами на листьях.</div>
-                        <div class="product-meta">Уход: Средний | 🐾 Опасно для животных</div>
-                        <div class="product-bottom">
-                            <div class="product-price">3500 ₽</div>
-                            <button class="btn buy-btn" data-price="3500">В корзину</button>
-                        </div>
-                    </div>
-                </div>
+        <!-- Витрина товаров -->
+        <main class="products-grid" id="productsGrid"></main>
+    </div>
 
-                <!-- Товар 2 -->
-                <div class="product-card">
-                    <div class="product-img">🌿</div>
-                    <div class="product-info">
-                        <div class="product-title">Фикус Лирата</div>
-                        <div class="product-desc">Крупные, глянцевые листья в форме скрипки. Идеально для гостиной.</div>
-                        <div class="product-meta">Уход: Простой | 🐾 Опасно для животных</div>
-                        <div class="product-bottom">
-                            <div class="product-price">2800 ₽</div>
-                            <button class="btn buy-btn" data-price="2800">В корзину</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Товар 3 -->
-                <div class="product-card">
-                    <div class="product-img">🌵</div>
-                    <div class="product-info">
-                        <div class="product-title">Суккулент Микс</div>
-                        <div class="product-desc">Набор из трех неприхотливых суккулентов в дизайнерском кашпо.</div>
-                        <div class="product-meta">Уход: Для новичков | 🐾 Безопасно</div>
-                        <div class="product-bottom">
-                            <div class="product-price">1200 ₽</div>
-                            <button class="btn buy-btn" data-price="1200">В корзину</button>
-                        </div>
-                    </div>
-                </div>
-
+    <!-- Модальное окно Корзины -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleCart(false)">&times;</span>
+            <h2>Ваша корзина</h2>
+            <div id="cartItemsList" style="margin-top: 15px;">
+                <!-- Сюда скрипт добавит выбранные товары -->
             </div>
+            <div class="cart-total" id="cartTotalSum">Итого: 0 ₽</div>
+            <button class="checkout-btn" onclick="orderCheckout()">Оформить заказ</button>
         </div>
-    </section>
+    </div>
 
-    <!-- Подвал сайта -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 JungleShop. Доставка редких растений по всему городу.</p>
-        </div>
-    </footer>
-
-    <!-- Скрипт корзины -->
     <script>
-        let totalSum = 0;
-        let totalItems = 0;
-        const cartStatus = document.getElementById('cart-status');
-        const buttons = document.querySelectorAll('.buy-btn');
+        // База данных товаров (ассортимент маркетплейса)
+        const products = [
+            { id: 1, title: "Монстера Альба в кашпо", price: 3400, category: "plants", img: "🌿" },
+            { id: 2, title: "Фикус Лирата Высокий", price: 4900, category: "plants", img: "🌳" },
+            { id: 3, title: "Суккулент Эчеверия в горшочке", price: 650, category: "plants", img: "🌵" },
+            { id: 4, title: "Кресло велюровое 'Сканди'", price: 12500, category: "furniture", img: "🪑" },
+            { id: 5, title: "Стол журнальный лофт", price: 4200, category: "furniture", img: "🪵" },
+            { id: 6, title: "Диван трехместный тканевый", price: 38900, category: "furniture", img: "🛋️" },
+            { id: 7, title: "Лампа настольная золотая", price: 2100, category: "decor", img: "💡" },
+            { id: 8, title: "Ваза керамическая белая", price: 1500, category: "decor", img: "🏺" },
+            { id: 9, title: "Ковер комнатный мягкий 160х220", price: 5800, category: "decor", img: "🎨" },
+            { id: 10, title: "Стеллаж для книг деревянный", price: 6900, category: "furniture", img: "📚" }
+        ];
 
-        buttons.forEach(button => {
-            button.addEventListener('click', () => {
-                const price = parseInt(button.getAttribute('data-price'));
-                totalSum += price;
-                totalItems += 1;
-                
-                cartStatus.textContent = `Корзина: ${totalSum} руб. (${totalItems} шт.)`;
-                
-                // Эффект нажатия
-                button.textContent = 'Добавлено!';
-                button.style.background = '#40916c';
-                setTimeout(() => {
-                    button.textContent = 'В корзину';
-                    button.style.background = '#1b4332';
-                }, 800);
+        let cart = []; // Массив для хранения товаров в корзине
+        let currentCategory = 'all';
+
+        // Функция вывода товаров на экран
+        function renderProducts(productsToDisplay) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            if(productsToDisplay.length === 0) {
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Товары не найдены</p>';
+                return;
+            }
+
+            productsToDisplay.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-img-placeholder">${product.img}</div>
+                    <div class="product-info">
+                        <div class="product-price">${product.price.toLocaleString()} ₽</div>
+                        <div class="product-title">${product.title}</div>
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">В корзину</button>
+                    </div>
+                `;
+                grid.appendChild(card);
             });
-        });
+        }
+
+        // Фильтрация по категориям
+        function filterCategory(category, buttonElement) {
+            currentCategory = category;
+            
+            // Меняем активную кнопку в меню
+            if(buttonElement) {
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                buttonElement.classList.add('active');
+            }
+
+            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+            renderProducts(filtered);
+        }
+
+        // Поиск по названию
+        function searchProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = products.filter(product => {
+                const matchesSearch = product.title.toLowerCase().includes(query);
+                const matchesCategory = currentCategory === 'all' || product.category === currentCategory;
+                return matchesSearch && matchesCategory;
+            });
+            renderProducts(filtered);
+        }
+
+        // Добавление товара в корзину
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            cart.push(product);
+            updateCartCounter();
+            
+            // Эффект анимации кнопки корзины
+            const cartBtn = document.querySelector('.cart-btn');
+            cartBtn.style.transform = 'scale(1.1)';
+            setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
+        }
+
+        // Обновление цифры на иконке корзины
+        function updateCartCounter() {
+            document.getElementById('cartCount').innerText = cart.length;
+        }
+
+        // Открыть / Закрыть корзину
+        function toggleCart(show) {
+            const modal = document.getElementById('cartModal');
+            modal.style.display = show ? 'flex' : 'none';
+            if (show) {
+                renderCartItems();
+            }
+        }
+
+        // Показ товаров внутри корзины
+        function renderCartItems() {
+            const list = document.getElementById('cartItemsList');
+            const totalSumEl = document.getElementById('cartTotalSum');
+            list.innerHTML = '';
+
+            if (cart.length === 0) {
+                list.innerHTML = '<p style="color: #999; text-align:center;">Корзина пока пуста</p>';
+                totalSumEl.innerText = 'Итого: 0 ₽';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                const row = document.createElement('div');
+                row.className = 'cart-item';
+                row.innerHTML = `
+                    <span>${item.img} ${item.title}</span>
+                    <strong>${item.price.toLocaleString()} ₽</strong>
+                    <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold;">✕</button>
+                `;
+                list.appendChild(row);
+            });
+
+            totalSumEl.innerText = `Итого: ${total.toLocaleString()} ₽`;
+        }
+
+        // Удаление элемента из корзины
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartCounter();
+            renderCartItems();
+        }
+
+        // Имитация оформления заказа
+        function orderCheckout() {
+            if(cart.length === 0) {
+                alert('Добавьте товары в корзину перед оформлением!');
+                return;
+            }
+            alert('🎉 Заказ успешно оформлен! Доставка в пункт выдачи HomeBerry займет 2 дня.');
+            cart = [];
+            updateCartCounter();
+            toggleCart(false);
+        }
+
+        // Первичный запуск при открытии страницы
+        renderProducts(products);
     </script>
 </body>
 </html>
