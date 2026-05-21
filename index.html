@@ -4,309 +4,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WolfPN Client</title>
+    <title>JungleShop — Магазин комнатных растений</title>
     <style>
-        :root {
-            --bg-color: #0f1225;
-            --card-color: #1a1e36;
-            --text-color: #ffffff;
-            --text-dim: #7982a7;
-            --power-off: #252a4a;
-            --power-on: #00ff66;
-            --power-glow: rgba(0, 255, 102, 0.4);
-        }
-
-        body {
+        /* Общие стили */
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background: radial-gradient(circle at top, #1e254a 0%, var(--bg-color) 100%);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f7f9f6;
+            color: #2c3e2b;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        .phone-mockup {
-            width: 100%;
-            max-width: 390px;
-            height: 100vh;
-            max-height: 844px;
-            background-color: var(--bg-color);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            border-radius: 40px;
-            border: 4px solid #2a3154;
-            box-sizing: border-box;
+        /* Шапка сайта */
+        header {
+            background: #ffffff;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1b4332;
+        }
+        .cart-status {
+            background: #1b4332;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        /* Первый экран (Промо) */
+        .hero {
+            background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 42px;
+            color: #1b4332;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 25px;
+            color: #40916c;
+        }
+        .btn {
+            display: inline-block;
+            background: #1b4332;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #2d6a4f;
+        }
+
+        /* Каталог товаров */
+        .catalog {
+            padding: 60px 0;
+        }
+        .catalog h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            color: #1b4332;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            position: relative;
+            justify-content: space-between;
+            transition: transform 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-img {
+            width: 100%;
+            height: 250px;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+        .product-info {
             padding: 20px;
         }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-            margin-bottom: 60px;
-        }
-
-        .icon-btn {
-            background: none;
-            border: none;
-            color: var(--text-color);
-            font-size: 24px;
-            cursor: pointer;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-        }
-
-        .power-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            margin-bottom: 40px;
-        }
-
-        .power-btn {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: #1d2347;
-            border: 8px solid var(--power-off);
-            box-shadow: inset 0 4px 10px rgba(0,0,0,0.5);
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .power-icon {
-            width: 60px;
-            height: 60px;
-            fill: var(--text-dim);
-            transition: fill 0.4s;
-        }
-
-        .power-btn.active {
-            border-color: var(--power-on);
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 0 30px var(--power-glow);
-        }
-
-        .power-btn.active .power-icon {
-            fill: var(--power-on);
-            filter: drop-shadow(0 0 8px var(--power-glow));
-        }
-
-        .status-text {
-            text-align: center;
-            font-size: 14px;
-            color: var(--text-dim);
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-        }
-
-        .server-card {
-            background-color: var(--card-color);
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 30px;
-        }
-
-        .server-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-dim);
-            font-size: 14px;
-            margin-bottom: 12px;
-        }
-
-        .server-info {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .flag {
-            width: 36px;
-            height: 24px;
-            background: #9e3039;
-            border-radius: 4px;
-            position: relative;
-        }
-        .flag::before {
-            content: '';
-            position: absolute;
-            top: 9px;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: #ffffff;
-        }
-
-        .server-name {
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .server-proto {
-            font-size: 12px;
-            color: var(--text-dim);
-            margin-top: 2px;
-        }
-
-        /* Окно подключения */
-        .modal {
-            display: none;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: #1c213e;
-            border-top-left-radius: 24px;
-            border-top-right-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
-            animation: slideUp 0.3s ease-out;
-            z-index: 10;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateY(100%); }
-            to { transform: translateY(0); }
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: bold;
+        .product-title {
+            font-size: 20px;
             margin-bottom: 10px;
-            color: var(--power-on);
+            color: #1b4332;
         }
-
-        .key-box {
-            background: #0f1225;
-            padding: 12px;
-            border-radius: 10px;
-            font-family: monospace;
-            font-size: 11px;
-            word-break: break-all;
-            max-height: 60px;
-            overflow-y: auto;
-            border: 1px solid #2a3154;
-            color: #a5b1e3;
-            margin-bottom: 12px;
+        .product-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            height: 40px;
+            overflow: hidden;
         }
-
-        .btn-action {
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 12px;
-            border-radius: 10px;
+        .product-meta {
+            font-size: 12px;
+            color: #40916c;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .product-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .product-price {
+            font-size: 22px;
             font-weight: bold;
-            cursor: pointer;
-            margin-top: 8px;
-            display: block;
-            text-align: center;
-            text-decoration: none;
-            box-sizing: border-box;
+            color: #1b4332;
         }
-        
-        .btn-connect { background: #00ff66; color: #000; }
-        .btn-connect:hover { background: #00dd55; }
-        .btn-copy { background: #3b447a; }
-        .btn-copy:hover { background: #4a5596; }
+
+        /* Футер */
+        footer {
+            background: #1b4332;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="phone-mockup">
-        <div class="header">
-            <button class="icon-btn">⚙️</button>
-            <button class="icon-btn">＋</button>
+    <!-- Шапка -->
+    <header>
+        <div class="container header-box">
+            <div class="logo">🌿 JungleShop</div>
+            <div class="cart-status" id="cart-status">Корзина: 0 руб.</div>
         </div>
+    </header>
 
-        <div class="power-container">
-            <button class="power-btn" id="vpnToggle">
-                <svg class="power-icon" viewBox="0 0 24 24">
-                    <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,7V13H13V7H11Z" />
-                </svg>
-            </button>
+    <!-- Промо-блок -->
+    <section class="hero">
+        <div class="container">
+            <h1>Превратите вашу комнату в стильные джунгли</h1>
+            <p>Редкие комнатные растения с гарантией здоровья каждого листа</p>
+            <a href="#catalog" class="btn">Смотреть каталог</a>
         </div>
+    </section>
 
-        <div class="status-text" id="statusLabel">Отключено</div>
-
-        <div class="server-card">
-            <div class="server-header">
-                <span>Список серверов</span>
-                <span>⏱️</span>
-            </div>
-            <div class="server-info">
-                <div class="flag"></div>
-                <div class="server-details">
-                    <span class="server-name">WolfPN | Latvia</span>
-                    <span class="server-proto">VLESS (Reality)</span>
+    <!-- Каталог -->
+    <section class="catalog" id="catalog">
+        <div class="container">
+            <h2>Наши растения</h2>
+            <div class="products-grid">
+                
+                <!-- Товар 1 -->
+                <div class="product-card">
+                    <div class="product-img">🌱</div>
+                    <div class="product-info">
+                        <div class="product-title">Монстера Альба</div>
+                        <div class="product-desc">Редкое растение с уникальными белыми пятнами на листьях.</div>
+                        <div class="product-meta">Уход: Средний | 🐾 Опасно для животных</div>
+                        <div class="product-bottom">
+                            <div class="product-price">3500 ₽</div>
+                            <button class="btn buy-btn" data-price="3500">В корзину</button>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Товар 2 -->
+                <div class="product-card">
+                    <div class="product-img">🌿</div>
+                    <div class="product-info">
+                        <div class="product-title">Фикус Лирата</div>
+                        <div class="product-desc">Крупные, глянцевые листья в форме скрипки. Идеально для гостиной.</div>
+                        <div class="product-meta">Уход: Простой | 🐾 Опасно для животных</div>
+                        <div class="product-bottom">
+                            <div class="product-price">2800 ₽</div>
+                            <button class="btn buy-btn" data-price="2800">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Товар 3 -->
+                <div class="product-card">
+                    <div class="product-img">🌵</div>
+                    <div class="product-info">
+                        <div class="product-title">Суккулент Микс</div>
+                        <div class="product-desc">Набор из трех неприхотливых суккулентов в дизайнерском кашпо.</div>
+                        <div class="product-meta">Уход: Для новичков | 🐾 Безопасно</div>
+                        <div class="product-bottom">
+                            <div class="product-price">1200 ₽</div>
+                            <button class="btn buy-btn" data-price="1200">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </section>
 
-        <!-- Модальное окно конфигурации -->
-        <div class="modal" id="keyModal">
-            <div class="modal-title">✓ Конфигурация готова</div>
-            <div class="key-box" id="vlessKey">vless://9d35c9aa-3702-4696-b7c0-08732da9cacb@31.170.22.195:2053?type=tcp&security=reality&pbk=_qE6AYCf0XJgIsOe7l2AXDgZPBcM226TPQTKFnm1ulM&fp=qq&sni=www.philips.com&sid=a407c9c6&spx=%2F&flow=xtls-rprx-vision#WolfPN%20%7C%20%F0%9F%87%B1%F0%9F%87%B2%20Latvia</div>
-            
-            <!-- Кнопка автоматического импорта в клиент -->
-            <a href="vless://9d35c9aa-3702-4696-b7c0-08732da9cacb@31.170.22.195:2053?type=tcp&security=reality&pbk=_qE6AYCf0XJgIsOe7l2AXDgZPBcM226TPQTKFnm1ulM&fp=qq&sni=www.philips.com&sid=a407c9c6&spx=%2F&flow=xtls-rprx-vision#WolfPN%20%7C%20%F0%9F%87%B1%F0%9F%87%B2%20Latvia" class="btn-action btn-connect">Открыть в VPN приложении</a>
-            
-            <button class="btn-action btn-copy" id="copyBtn">Скопировать ключ вручную</button>
+    <!-- Подвал сайта -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 JungleShop. Доставка редких растений по всему городу.</p>
         </div>
-    </div>
+    </footer>
 
+    <!-- Скрипт корзины -->
     <script>
-        const vpnToggle = document.getElementById('vpnToggle');
-        const statusLabel = document.getElementById('statusLabel');
-        const keyModal = document.getElementById('keyModal');
-        const copyBtn = document.getElementById('copyBtn');
-        const keyBox = document.getElementById('vlessKey');
+        let totalSum = 0;
+        let totalItems = 0;
+        const cartStatus = document.getElementById('cart-status');
+        const buttons = document.querySelectorAll('.buy-btn');
 
-        vpnToggle.addEventListener('click', () => {
-            vpnToggle.classList.toggle('active');
-            
-            if (vpnToggle.classList.contains('active')) {
-                statusLabel.innerText = 'Подключение...';
-                statusLabel.style.color = '#ffaa00';
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const price = parseInt(button.getAttribute('data-price'));
+                totalSum += price;
+                totalItems += 1;
                 
+                cartStatus.textContent = `Корзина: ${totalSum} руб. (${totalItems} шт.)`;
+                
+                // Эффект нажатия
+                button.textContent = 'Добавлено!';
+                button.style.background = '#40916c';
                 setTimeout(() => {
-                    statusLabel.innerText = 'Конфигурация активна';
-                    statusLabel.style.color = 'var(--power-on)';
-                    keyModal.style.display = 'block';
+                    button.textContent = 'В корзину';
+                    button.style.background = '#1b4332';
                 }, 800);
-            } else {
-                statusLabel.innerText = 'Отключено';
-                statusLabel.style.color = 'var(--text-dim)';
-                keyModal.style.display = 'none';
-            }
-        });
-
-        copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(keyBox.innerText).then(() => {
-                const originalText = copyBtn.innerText;
-                copyBtn.innerText = '✓ Скопировано!';
-                copyBtn.style.background = '#00ff66';
-                copyBtn.style.color = '#000';
-                
-                setTimeout(() => {
-                    copyBtn.innerText = originalText;
-                    copyBtn.style.background = '#3b447a';
-                    copyBtn.style.color = 'white';
-                }, 1500);
             });
         });
     </script>
