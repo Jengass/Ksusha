@@ -4,110 +4,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomeBerry — Маркетплейс товаров для дома</title>
+    <title>OZON — Интернет-магазин мебели и декора</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Golos Text', 'Segoe UI', Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: #f6f6f9;
-            color: #333;
+            background-color: #f2f4f7;
+            color: #101114;
         }
 
-        /* Шапка в стиле маркетплейса */
+        /* Шапка в стиле OZON */
         header {
-            background: linear-gradient(135deg, #cb11ab 0%, #481173 100%);
-            color: white;
-            padding: 15px 20px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e5ed;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 12px 20px;
         }
 
         .header-container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 20px;
+            font-size: 13px;
+            color: #001a34;
+        }
+
+        .geo-delivery select {
+            border: none;
+            color: #005bff;
+            font-weight: 600;
+            background: none;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .header-main {
+            display: flex;
+            align-items: center;
+            gap: 24px;
         }
 
         .logo {
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 1px;
+            font-size: 32px;
+            font-weight: 900;
+            color: #005bff;
             cursor: pointer;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #ff0055;
         }
 
         .search-bar {
             flex-grow: 1;
-            max-width: 600px;
             position: relative;
         }
 
         .search-bar input {
             width: 100%;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 25px;
-            font-size: 16px;
+            padding: 12px 20px 12px 45px;
+            border: 2px solid #005bff;
+            border-radius: 8px;
+            font-size: 15px;
             outline: none;
         }
 
-        .cart-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #808d9a;
+        }
+
+        .nav-buttons {
             display: flex;
+            gap: 20px;
             align-items: center;
-            gap: 8px;
-            transition: 0.3s;
         }
 
-        .cart-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .cart-count {
-            background-color: #f2453b;
-            padding: 2px 8px;
-            border-radius: 10px;
+        .nav-btn {
+            background: none;
+            border: none;
+            color: #001a34;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            gap: 4px;
         }
 
-        /* Главный контейнер */
+        .nav-btn:hover {
+            color: #005bff;
+        }
+
+        .nav-btn-icon {
+            font-size: 22px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -5px;
+            right: 5px;
+            background-color: #ff0055;
+            color: white;
+            font-size: 11px;
+            padding: 1px 6px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        /* Основной контент */
         .container {
-            max-width: 1200px;
-            margin: 30px auto;
+            max-width: 1300px;
+            margin: 24px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 250px 1fr;
-            gap: 30px;
+            grid-template-columns: 260px 1fr;
+            gap: 24px;
         }
 
-        /* Боковое меню (Фильтры) */
+        /* Меню категорий как на Ozon */
         .sidebar {
-            background: white;
+            background: #ffffff;
             padding: 20px;
             border-radius: 12px;
             height: fit-content;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #e0e5ed;
         }
 
         .sidebar h3 {
-            margin-bottom: 15px;
-            font-size: 18px;
-            color: #481173;
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #001a34;
         }
 
         .filter-btn {
@@ -116,17 +164,23 @@
             text-align: left;
             background: none;
             border: none;
-            padding: 10px 5px;
-            font-size: 15px;
+            padding: 10px 8px;
+            font-size: 14px;
+            color: #4d5f71;
             cursor: pointer;
-            border-bottom: 1px solid #eee;
-            transition: 0.2s;
+            border-radius: 6px;
+            transition: 0.15s;
         }
 
-        .filter-btn:hover, .filter-btn.active {
-            color: #cb11ab;
-            font-weight: bold;
-            padding-left: 10px;
+        .filter-btn:hover {
+            background: #f2f4f7;
+            color: #005bff;
+        }
+
+        .filter-btn.active {
+            background: #e6f0ff;
+            color: #005bff;
+            font-weight: 600;
         }
 
         /* Сетка товаров */
@@ -137,70 +191,111 @@
         }
 
         .product-card {
-            background: white;
+            background: #ffffff;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            transition: 0.3s;
+            border: 1px solid #e0e5ed;
             display: flex;
             flex-direction: column;
             position: relative;
+            padding: 12px;
+            transition: box-shadow 0.2s;
         }
 
         .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
         }
 
-        /* Заглушка для фото (цветной блок, имитирующий фото товара) */
-        .product-img-placeholder {
-            height: 200px;
+        .favorite-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.8);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
-            background-color: #eaeaea;
+            z-index: 5;
+            transition: 0.2s;
         }
 
-        .product-info {
-            padding: 15px;
+        .favorite-icon.active {
+            color: #ff0055;
+        }
+
+        .product-img-placeholder {
+            height: 180px;
             display: flex;
-            flex-direction: column;
-            flex-grow: 1;
+            align-items: center;
+            justify-content: center;
+            font-size: 55px;
+            background-color: #f7f9fa;
+            border-radius: 8px;
+            margin-bottom: 12px;
         }
 
-        .product-price {
+        /* Ценники Ozon Карта */
+        .price-block {
+            margin-bottom: 8px;
+        }
+
+        .ozon-card-price {
             font-size: 20px;
+            font-weight: 800;
+            color: #00b06c; /* Зеленый цвет Озон карты */
+        }
+
+        .ozon-card-label {
+            font-size: 11px;
+            background-color: #e6f7f0;
+            color: #00b06c;
+            padding: 1px 4px;
+            border-radius: 4px;
             font-weight: bold;
-            color: #111;
-            margin-bottom: 5px;
+            margin-left: 4px;
+        }
+
+        .default-price {
+            font-size: 14px;
+            color: #707f8d;
+            text-decoration: line-through;
+            margin-top: 2px;
         }
 
         .product-title {
             font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.3;
+            color: #101114;
+            line-height: 1.4;
+            margin-bottom: 12px;
             flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .add-to-cart {
-            background-color: #cb11ab;
+            background-color: #005bff;
             color: white;
             border: none;
             padding: 10px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            width: 100%;
-            transition: 0.2s;
+            font-size: 14px;
+            transition: background-color 0.15s;
         }
 
         .add-to-cart:hover {
-            background-color: #a80e8e;
+            background-color: #004dd6;
         }
 
-        /* Модальное окно Корзины */
+        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
@@ -208,7 +303,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,26,52,0.5);
             justify-content: center;
             align-items: center;
             z-index: 200;
@@ -216,11 +311,11 @@
 
         .modal-content {
             background: white;
-            padding: 30px;
+            padding: 24px;
             border-radius: 16px;
             width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
+            max-width: 550px;
+            max-height: 85vh;
             overflow-y: auto;
             position: relative;
         }
@@ -231,15 +326,59 @@
             right: 20px;
             font-size: 24px;
             cursor: pointer;
-            color: #aaa;
+            color: #808d9a;
         }
 
         .cart-item {
-            display: flex;
-            justify-content: space-between;
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
             align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e5ed;
+        }
+
+        .cart-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f2f4f7;
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
+        .qty-btn {
+            background: none;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            width: 20px;
+            color: #005bff;
+        }
+
+        /* Купоны в корзине */
+        .promo-block {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .promo-block input {
+            flex-grow: 1;
+            padding: 8px 12px;
+            border: 1px solid #e0e5ed;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        .promo-block button {
+            background: #101114;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
         }
 
         .cart-total {
@@ -247,14 +386,16 @@
             font-size: 18px;
             font-weight: bold;
             text-align: right;
+            border-top: 2px solid #f2f4f7;
+            padding-top: 15px;
         }
 
         .checkout-btn {
-            background: #481173;
+            background: #ff0055;
             color: white;
             border: none;
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
@@ -262,56 +403,110 @@
             margin-top: 15px;
         }
 
-        /* Адаптивность для мобилок */
+        /* Платежный шлюз Ozon */
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .payment-form input {
+            padding: 12px;
+            border: 1px solid #e0e5ed;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .pay-submit-btn {
+            background: #005bff;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Всплывающие уведомления */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #001a34;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 300;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
         @media (max-width: 768px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
-            .sidebar {
-                display: flex;
-                overflow-x: auto;
-                gap: 10px;
-                padding: 10px;
-            }
-            .filter-btn {
-                border: 1px solid #ccc;
-                border-radius: 15px;
-                padding: 5px 15px;
-                white-space: nowrap;
-            }
-            .search-bar {
-                display: none; /* Упростим для мобильных */
-            }
+            .container { grid-template-columns: 1fr; }
+            .sidebar { display: flex; overflow-x: auto; gap: 8px; padding: 8px; }
+            .filter-btn { white-space: nowrap; }
+            .header-top { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Шапка сайта -->
+    <!-- Уведомления -->
+    <div id="toastNotification" class="toast"></div>
+
+    <!-- Шапка OZON -->
     <header>
         <div class="header-container">
-            <div class="logo" onclick="filterCategory('all')">HomeBerry</div>
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Я ищу мебель, растения, декор..." oninput="searchProducts()">
+            <div class="header-top">
+                <div class="geo-delivery">
+                    <span>Город доставки: 
+                        <select id="citySelect" onchange="updatePvzOptions()">
+                            <option value="Москва">Москва</option>
+                            <option value="Санкт-Петербург">Санкт-Петербург</option>
+                            <option value="Казань">Казань</option>
+                        </select>
+                    </span>
+                    <span>ПВЗ Озон: 
+                        <select id="pvzSelect"></select>
+                    </span>
+                </div>
+                <div>Доставка Ozon за 1 день от 0 ₽</div>
             </div>
-            <button class="cart-btn" onclick="toggleCart(true)">
-                🛒 Корзина <span class="cart-count" id="cartCount">0</span>
-            </button>
+            <div class="header-main">
+                <div class="logo" onclick="filterCategory('all')">OZON<span>.</span></div>
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Искать на Ozon мебель, текстиль, декор..." oninput="searchProducts()">
+                </div>
+                <div class="nav-buttons">
+                    <button class="nav-btn" onclick="toggleFavoritesModal(true)">
+                        <span class="nav-btn-icon">❤️</span>
+                        <span>Избранное</span>
+                        <span class="badge" id="favCount">0</span>
+                    </button>
+                    <button class="nav-btn" onclick="toggleCart(true)">
+                        <span class="nav-btn-icon">🛒</span>
+                        <span>Корзина</span>
+                        <span class="badge" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </header>
 
-    <!-- Основной контент -->
+    <!-- Основная сетка -->
     <div class="container">
-        <!-- Боковой фильтр -->
         <aside class="sidebar">
             <h3>Категории</h3>
-            <button class="filter-btn active" onclick="filterCategory('all', this)">Все товары</button>
-            <button class="filter-btn" onclick="filterCategory('plants', this)">Растения</button>
+            <button class="filter-btn active" onclick="filterCategory('all', this)">Все категории</button>
             <button class="filter-btn" onclick="filterCategory('furniture', this)">Мебель</button>
-            <button class="filter-btn" onclick="filterCategory('decor', this)">Декор и свет</button>
+            <button class="filter-btn" onclick="filterCategory('textile', this)">Текстиль</button>
+            <button class="filter-btn" onclick="filterCategory('dishes', this)">Посуда</button>
+            <button class="filter-btn" onclick="filterCategory('decor', this)">Декор и освещение</button>
         </aside>
 
-        <!-- Витрина товаров -->
         <main class="products-grid" id="productsGrid"></main>
     </div>
 
@@ -319,73 +514,133 @@
     <div class="modal" id="cartModal">
         <div class="modal-content">
             <span class="close-modal" onclick="toggleCart(false)">&times;</span>
-            <h2>Ваша корзина</h2>
-            <div id="cartItemsList" style="margin-top: 15px;">
-                <!-- Сюда скрипт добавит выбранные товары -->
+            <h2>Корзина</h2>
+            <div id="cartItemsList" style="margin-top: 15px;"></div>
+            
+            <div class="promo-block">
+                <input type="text" id="promoInput" placeholder="Введите промокод (например, OZON2026)">
+                <button onclick="applyPromo()">Применить</button>
             </div>
+
             <div class="cart-total" id="cartTotalSum">Итого: 0 ₽</div>
-            <button class="checkout-btn" onclick="orderCheckout()">Оформить заказ</button>
+            <button class="checkout-btn" onclick="openPaymentModal()">Перейти к оформлению</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно Избранного -->
+    <div class="modal" id="favModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="toggleFavoritesModal(false)">&times;</span>
+            <h2>Избранные товары</h2>
+            <div id="favItemsList" style="margin-top: 15px; display: grid; gap: 10px;"></div>
+        </div>
+    </div>
+
+    <!-- Эмуляция Оплаты Ozon -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-modal" onclick="togglePayment(false)">&times;</span>
+            <h2 style="color: #005bff; text-align: center;">Ozon Оплата</h2>
+            <p id="paymentTargetPvz" style="font-size: 12px; color: #707f8d; margin-top: 5px; text-align: center;"></p>
+            <div style="font-size: 26px; font-weight: bold; text-align: center; margin: 15px 0; color:#00b06c;" id="paymentSum">0 ₽</div>
+            
+            <div class="payment-form">
+                <input type="text" id="cardNumber" placeholder="Номер карты" maxlength="19" oninput="formatCardNumber(this)">
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="cardExpiry" placeholder="ММ/ГГ" maxlength="5" style="width:50%;">
+                    <input type="password" id="cardCvv" placeholder="CVV" maxlength="3" style="width:50%;">
+                </div>
+                <button class="pay-submit-btn" onclick="processPayment()">Оплатить Ozon Картой</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // База данных товаров (ассортимент маркетплейса)
+        const pvzData = {
+            "Москва": ["ул. Арбат, д. 2", "пр-т Ленина, д. 54", "ул. Маросейка, д. 10"],
+            "Санкт-Петербург": ["ул. Рубинштейна, д. 8", "Приморский пр-т, д. 22"],
+            "Казань": ["ул. Баумана, д. 15", "пр-т Победы, д. 100"]
+        };
+
         const products = [
-            { id: 1, title: "Монстера Альба в кашпо", price: 3400, category: "plants", img: "🌿" },
-            { id: 2, title: "Фикус Лирата Высокий", price: 4900, category: "plants", img: "🌳" },
-            { id: 3, title: "Суккулент Эчеверия в горшочке", price: 650, category: "plants", img: "🌵" },
-            { id: 4, title: "Кресло велюровое 'Сканди'", price: 12500, category: "furniture", img: "🪑" },
-            { id: 5, title: "Стол журнальный лофт", price: 4200, category: "furniture", img: "🪵" },
-            { id: 6, title: "Диван трехместный тканевый", price: 38900, category: "furniture", img: "🛋️" },
-            { id: 7, title: "Лампа настольная золотая", price: 2100, category: "decor", img: "💡" },
-            { id: 8, title: "Ваза керамическая белая", price: 1500, category: "decor", img: "🏺" },
-            { id: 9, title: "Ковер комнатный мягкий 160х220", price: 5800, category: "decor", img: "🎨" },
-            { id: 10, title: "Стеллаж для книг деревянный", price: 6900, category: "furniture", img: "📚" }
+            { id: 1, title: "Кресло велюровое Ozon-Сканди", price: 12500, category: "furniture", img: "🪑" },
+            { id: 2, title: "Журнальный стол лофт эко-дуб", price: 4200, category: "furniture", img: "🪵" },
+            { id: 3, title: "Диван трехместный раскладной Comfort", price: 38900, category: "furniture", img: "🛋️" },
+            { id: 4, title: "Анатомическая подушка Sleep-Well", price: 1800, category: "textile", img: "🛌" },
+            { id: 5, title: "Плед пушистый велсофт 200х220", price: 2300, category: "textile", img: "🧣" },
+            { id: 6, title: "Шторы блэкаут солнцезащитные", price: 3500, category: "textile", img: "⛺" },
+            { id: 7, title: "Набор обеденных тарелок (6 шт)", price: 2900, category: "dishes", img: "🥣" },
+            { id: 8, title: "Бокалы хрустальные премиум (4 шт)", price: 1700, category: "dishes", img: "🍷" },
+            { id: 9, title: "Лампа настольная скандинавская", price: 2100, category: "decor", img: "💡" },
+            { id: 10, title: "Зеркало настенное в круглой раме", price: 4600, category: "decor", img: "🪞" }
         ];
 
-        let cart = []; // Массив для хранения товаров в корзине
+        let cart = {}; 
+        let favorites = []; 
         let currentCategory = 'all';
+        let discountMultiplier = 1.0; // Скидка по купону
 
-        // Функция вывода товаров на экран
+        function showToast(text) {
+            const toast = document.getElementById('toastNotification');
+            toast.innerText = text;
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 2000);
+        }
+
+        function updatePvzOptions() {
+            const city = document.getElementById('citySelect').value;
+            const pvzSelect = document.getElementById('pvzSelect');
+            pvzSelect.innerHTML = '';
+            pvzData[city].forEach(pvz => {
+                const opt = document.createElement('option');
+                opt.value = pvz; opt.innerText = pvz;
+                pvzSelect.appendChild(opt);
+            });
+        }
+
+        // Вывод карточек со скидкой по Ozon Карте (-15%)
         function renderProducts(productsToDisplay) {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
 
             if(productsToDisplay.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #999;">Товары не найдены</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #808d9a;">Ничего не найдено</p>';
                 return;
             }
 
             productsToDisplay.forEach(product => {
+                const isFav = favorites.includes(product.id) ? 'active' : '';
+                const cardPrice = Math.floor(product.price * 0.85); // Цена Ozon Карты
+
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
+                    <button class="favorite-icon ${isFav}" onclick="toggleFavorite(${product.id}, this)">❤️</button>
                     <div class="product-img-placeholder">${product.img}</div>
-                    <div class="product-info">
-                        <div class="product-price">${product.price.toLocaleString()} ₽</div>
-                        <div class="product-title">${product.title}</div>
-                        <button class="add-to-cart" onclick="addToCart(${product.id})">В корзину</button>
+                    <div class="price-block">
+                        <div>
+                            <span class="ozon-card-price">${cardPrice.toLocaleString()} ₽</span>
+                            <span class="ozon-card-label">c Ozon Картой</span>
+                        </div>
+                        <div class="default-price">${product.price.toLocaleString()} ₽ без карты</div>
                     </div>
+                    <div class="product-title">${product.title}</div>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">В корзину</button>
                 `;
                 grid.appendChild(card);
             });
         }
 
-        // Фильтрация по категориям
         function filterCategory(category, buttonElement) {
             currentCategory = category;
-            
-            // Меняем активную кнопку в меню
             if(buttonElement) {
                 document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
                 buttonElement.classList.add('active');
             }
-
             const filtered = category === 'all' ? products : products.filter(p => p.category === category);
             renderProducts(filtered);
         }
 
-        // Поиск по названию
         function searchProducts() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const filtered = products.filter(product => {
@@ -396,80 +651,156 @@
             renderProducts(filtered);
         }
 
-        // Добавление товара в корзину
+        // Корзина
         function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            cart.push(product);
+            cart[productId] = (cart[productId] || 0) + 1;
             updateCartCounter();
-            
-            // Эффект анимации кнопки корзины
-            const cartBtn = document.querySelector('.cart-btn');
-            cartBtn.style.transform = 'scale(1.1)';
-            setTimeout(() => cartBtn.style.transform = 'scale(1)', 200);
+            showToast("🛒 Товар добавлен в корзину Озона!");
         }
 
-        // Обновление цифры на иконке корзины
+        function changeQty(productId, amount) {
+            if (!cart[productId]) return;
+            cart[productId] += amount;
+            if (cart[productId] <= 0) delete cart[productId];
+            updateCartCounter();
+            renderCartItems();
+        }
+
         function updateCartCounter() {
-            document.getElementById('cartCount').innerText = cart.length;
+            let count = Object.values(cart).reduce((a, b) => a + b, 0);
+            document.getElementById('cartCount').innerText = count;
         }
 
-        // Открыть / Закрыть корзину
-        function toggleCart(show) {
-            const modal = document.getElementById('cartModal');
-            modal.style.display = show ? 'flex' : 'none';
-            if (show) {
-                renderCartItems();
+        // Избранное
+        function toggleFavorite(productId, element) {
+            const index = favorites.indexOf(productId);
+            if (index > -1) {
+                favorites.splice(index, 1);
+                element.classList.remove('active');
+                showToast("💔 Удалено из избранного");
+            } else {
+                favorites.push(productId);
+                element.classList.add('active');
+                showToast("❤️ Добавлено в избранное Ozon!");
+            }
+            document.getElementById('favCount').innerText = favorites.length;
+        }
+
+        function toggleFavoritesModal(show) {
+            document.getElementById('favModal').style.display = show ? 'flex' : 'none';
+            if(show) {
+                const list = document.getElementById('favItemsList');
+                list.innerHTML = '';
+                if(favorites.length === 0) {
+                    list.innerHTML = '<p style="color:#707f8d; text-align:center;">Список избранного пуст</p>';
+                    return;
+                }
+                favorites.forEach(id => {
+                    const item = products.find(p => p.id === id);
+                    const row = document.createElement('div');
+                    row.style = 'display:flex; justify-content:space-between; align-items:center; background:#f2f4f7; padding:10px; border-radius:8px;';
+                    row.innerHTML = `<span>${item.img} ${item.title}</span><button onclick="addToCart(${item.id})" style="background:#005bff; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Купить</button>`;
+                    list.appendChild(row);
+                });
             }
         }
 
-        // Показ товаров внутри корзины
+        function toggleCart(show) {
+            document.getElementById('cartModal').style.display = show ? 'flex' : 'none';
+            if (show) renderCartItems();
+        }
+
         function renderCartItems() {
             const list = document.getElementById('cartItemsList');
             const totalSumEl = document.getElementById('cartTotalSum');
             list.innerHTML = '';
 
-            if (cart.length === 0) {
-                list.innerHTML = '<p style="color: #999; text-align:center;">Корзина пока пуста</p>';
-                totalSumEl.innerText = 'Итого: 0 ₽';
-                return;
-            }
+            let totalSum = 0;
+            for (let id in cart) {
+                const product = products.find(p => p.id == id);
+                const count = cart[id];
+                const cardPrice = Math.floor(product.price * 0.85); // Считаем по цене карты
+                const cost = cardPrice * count;
+                totalSum += cost;
 
-            let total = 0;
-            cart.forEach((item, index) => {
-                total += item.price;
                 const row = document.createElement('div');
                 row.className = 'cart-item';
                 row.innerHTML = `
-                    <span>${item.img} ${item.title}</span>
-                    <strong>${item.price.toLocaleString()} ₽</strong>
-                    <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold;">✕</button>
+                    <span style="font-size:24px;">${product.img}</span>
+                    <div>
+                        <div style="font-weight:600; font-size:14px;">${product.title}</div>
+                        <div style="color:#00b06c; font-size:13px; font-weight:600;">${cardPrice.toLocaleString()} ₽ (цена карты)</div>
+                    </div>
+                    <div class="cart-item-qty">
+                        <button class="qty-btn" onclick="changeQty(${product.id}, -1)">−</button>
+                        <span style="font-weight:600; font-size:14px;">${count} шт.</span>
+                        <button class="qty-btn" onclick="changeQty(${product.id}, 1)">+</button>
+                    </div>
+                    <strong>${cost.toLocaleString()} ₽</strong>
                 `;
                 list.appendChild(row);
-            });
-
-            totalSumEl.innerText = `Итого: ${total.toLocaleString()} ₽`;
-        }
-
-        // Удаление элемента из корзины
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartCounter();
-            renderCartItems();
-        }
-
-        // Имитация оформления заказа
-        function orderCheckout() {
-            if(cart.length === 0) {
-                alert('Добавьте товары в корзину перед оформлением!');
-                return;
             }
-            alert('🎉 Заказ успешно оформлен! Доставка в пункт выдачи HomeBerry займет 2 дня.');
-            cart = [];
-            updateCartCounter();
-            toggleCart(false);
+
+            totalSum = Math.floor(totalSum * discountMultiplier);
+            totalSumEl.innerText = `Итого к оплате: ${totalSum.toLocaleString()} ₽`;
+            if (Object.keys(cart).length === 0) {
+                list.innerHTML = '<p style="color:#808d9a; text-align:center; padding:15px;">Ваша корзина Ozon пуста</p>';
+            }
         }
 
-        // Первичный запуск при открытии страницы
+        function applyPromo() {
+            const code = document.getElementById('promoInput').value.trim();
+            if(code === 'OZON2026') {
+                discountMultiplier = 0.9; // Скидка 10%
+                showToast("🏷️ Промокод применен! Доп. скидка 10%");
+                renderCartItems();
+            } else {
+                alert("Неверный промокод!");
+            }
+        }
+
+        function openPaymentModal() {
+            let totalSum = 0;
+            for (let id in cart) {
+                const product = products.find(p => p.id == id);
+                totalSum += Math.floor(product.price * 0.85) * cart[id];
+            }
+            totalSum = Math.floor(totalSum * discountMultiplier);
+
+            if (totalSum === 0) {
+                alert("Добавьте товары в корзину!"); return;
+            }
+
+            toggleCart(false);
+            togglePayment(true);
+
+            const city = document.getElementById('citySelect').value;
+            const pvz = document.getElementById('pvzSelect').value;
+            document.getElementById('paymentSum').innerText = `${totalSum.toLocaleString()} ₽`;
+            document.getElementById('paymentTargetPvz').innerText = `Доставка: ПВЗ Ozon, г. ${city}, ${pvz}`;
+        }
+
+        function togglePayment(show) {
+            document.getElementById('paymentModal').style.display = show ? 'flex' : 'none';
+        }
+
+        function formatCardNumber(input) {
+            let v = input.value.replace(/\D/g, '');
+            input.value = v.match(/.{1,4}/g)?.join(' ') || '';
+        }
+
+        function processPayment() {
+            const card = document.getElementById('cardNumber').value;
+            if (card.length < 19) { alert("Введите верный номер карты!"); return; }
+
+            alert("Проверка Ozon Карты...");
+            setTimeout(() => {
+                alert("🎉 Успешно! Заказ оплачен.\n\nТрек-номер для отслеживания выслан в личный кабинет Ozon.");
+                cart = {}; updateCartCounter(); togglePayment(false);
+            }, 1200);
+        }
+
+        updatePvzOptions();
         renderProducts(products);
     </script>
 </body>
