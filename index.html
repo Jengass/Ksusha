@@ -1,706 +1,186 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OZON Pets — Маркетплейс породистых собак и товаров</title>
+    <title>Лапки и Хвостики — Магазин питомцев</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Golos Text', 'Segoe UI', Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
         body {
-            background-color: #f2f4f7;
-            color: #101114;
+            background-color: #f9f9f9;
+            color: #333;
         }
-
-        /* Шапка сайта в стиле Ozon */
         header {
-            background-color: #ffffff;
-            border-bottom: 1px solid #e0e5ed;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 12px 20px;
-        }
-
-        .header-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            color: #001a34;
-        }
-
-        .geo-delivery select {
-            border: none;
-            color: #005bff;
-            font-weight: 600;
-            background: none;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .header-main {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .logo {
-            font-size: 30px;
-            font-weight: 900;
-            color: #005bff;
-            cursor: pointer;
-            letter-spacing: -1px;
-        }
-
-        .logo span {
-            color: #00b06c;
-        }
-
-        .search-bar {
-            flex-grow: 1;
-            position: relative;
-        }
-
-        .search-bar input {
-            width: 100%;
-            padding: 12px 20px 12px 45px;
-            border: 2px solid #005bff;
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #808d9a;
-        }
-
-        .cart-btn {
-            background: #005bff;
-            border: none;
+            background-color: #ff9f43;
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: 0.2s;
-        }
-
-        .cart-btn:hover {
-            background: #004dd6;
-        }
-
-        .cart-count {
-            background-color: #ff0055;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 12px;
-        }
-
-        /* Главная сетка */
-        .container {
-            max-width: 1300px;
-            margin: 24px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            gap: 24px;
-        }
-
-        /* Боковая панель категорий */
-        .sidebar {
-            background: #ffffff;
             padding: 20px;
-            border-radius: 12px;
-            height: fit-content;
-            border: 1px solid #e0e5ed;
+            text-align: center;
         }
-
-        .sidebar h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
-            color: #001a34;
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
         }
-
-        .filter-btn {
-            display: block;
-            width: 100%;
-            text-align: left;
-            background: none;
-            border: none;
-            padding: 10px 8px;
-            font-size: 14px;
-            color: #4d5f71;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: 0.15s;
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ff9f43;
         }
-
-        .filter-btn:hover {
-            background: #f2f4f7;
-            color: #005bff;
-        }
-
-        .filter-btn.active {
-            background: #e6f0ff;
-            color: #005bff;
-            font-weight: 600;
-        }
-
-        /* Витрина карточек */
-        .products-grid {
+        .catalog {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
+            margin-bottom: 50px;
         }
-
-        .product-card {
-            background: #ffffff;
+        .card {
+            background: white;
             border-radius: 12px;
             overflow: hidden;
-            border: 1px solid #e0e5ed;
-            display: flex;
-            flex-direction: column;
-            padding: 12px;
-            transition: box-shadow 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
         }
-
-        .product-card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        .card:hover {
+            transform: translateY(-5px);
         }
-
-        .product-img {
-            height: 170px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 65px;
-            background-color: #f7f9fa;
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-
-        /* Цены */
-        .price-block {
-            margin-bottom: 8px;
-        }
-
-        .ozon-price {
-            font-size: 20px;
-            font-weight: 800;
-            color: #00b06c;
-        }
-
-        .ozon-label {
-            font-size: 11px;
-            background-color: #e6f7f0;
-            color: #00b06c;
-            padding: 1px 5px;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-left: 4px;
-        }
-
-        .old-price {
-            font-size: 13px;
-            color: #707f8d;
-            text-decoration: line-through;
-            margin-top: 2px;
-        }
-
-        .product-title {
-            font-size: 14px;
-            color: #101114;
-            line-height: 1.4;
-            margin-bottom: 12px;
-            flex-grow: 1;
-            font-weight: 600;
-        }
-
-        .product-meta {
-            font-size: 12px;
-            color: #707f8d;
-            margin-bottom: 10px;
-            background: #f2f4f7;
-            padding: 4px 8px;
-            border-radius: 4px;
-            width: fit-content;
-        }
-
-        .add-to-cart {
-            background-color: #005bff;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            transition: 0.15s;
-        }
-
-        .add-to-cart:hover {
-            background-color: #004dd6;
-        }
-
-        /* Модальное окно Корзины */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,26,52,0.5);
-            justify-content: center; align-items: center;
-            z-index: 200;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 24px;
-            border-radius: 16px;
-            width: 90%;
-            max-width: 550px;
-            max-height: 85vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px; right: 20px;
-            font-size: 24px; cursor: pointer;
-            color: #808d9a;
-        }
-
-        .cart-item {
-            display: grid;
-            grid-template-columns: auto 1fr auto auto;
-            align-items: center;
-            gap: 15px;
-            padding: 15px 0;
-            border-bottom: 1px solid #e0e5ed;
-        }
-
-        .cart-item-qty {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #f2f4f7;
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
-
-        .qty-btn {
-            background: none; border: none;
-            font-weight: bold; font-size: 16px;
-            cursor: pointer; width: 20px; color: #005bff;
-        }
-
-        .cart-total {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: right;
-            border-top: 2px solid #f2f4f7;
-            padding-top: 15px;
-        }
-
-        .checkout-btn {
-            background: #ff0055;
-            color: white;
-            border: none;
+        .card img {
             width: 100%;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 16px;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 20px;
+        }
+        .price {
+            font-size: 1.25rem;
             font-weight: bold;
+            color: #10ac84;
+            margin: 10px 0;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #ff9f43;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            transition: background 0.3s;
+            border: none;
             cursor: pointer;
-            margin-top: 15px;
         }
-
-        /* Кастомные уведомления в стиле GOOGLE */
-        .google-alert {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            justify-content: center; align-items: center;
-            z-index: 400;
+        .btn:hover {
+            background-color: #ee5253;
         }
-
-        .google-box {
+        .order-form {
             background: white;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 420px;
-            padding: 24px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 0 auto 50px auto;
         }
-
-        .google-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .form-group {
             margin-bottom: 15px;
         }
-
-        .google-logo {
-            font-size: 22px;
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
             font-weight: bold;
         }
-        .g-g { color: #4285F4; }
-        .g-o1 { color: #EA4335; }
-        .g-o2 { color: #FBBC05; }
-        .g-l { color: #34A853; }
-
-        .google-title {
-            font-size: 16px;
-            font-weight: 500;
-            color: #202124;
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
         }
-
-        .google-body {
-            font-size: 14px;
-            color: #5f6368;
-            line-height: 1.5;
-            margin-bottom: 24px;
-        }
-
-        .google-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-        }
-
-        .google-btn {
-            padding: 10px 16px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-        }
-
-        .google-btn-cancel { background: none; color: #1a73e8; }
-        .google-btn-cancel:hover { background: #f8f9fa; }
-        .google-btn-confirm { background: #1a73e8; color: white; }
-        .google-btn-confirm:hover { background: #1557b0; }
-
-        /* Всплывающий нижний тост */
-        .toast {
-            position: fixed;
-            bottom: 20px; right: 20px;
-            background: #001a34; color: white;
-            padding: 12px 24px; border-radius: 8px;
-            z-index: 300; display: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-        @media (max-width: 768px) {
-            .container { grid-template-columns: 1fr; }
-            .sidebar { display: flex; overflow-x: auto; gap: 8px; padding: 8px; }
-            .filter-btn { white-space: nowrap; }
-            .header-top { display: none; }
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Всплывающий тост -->
-    <div id="toastNotification" class="toast"></div>
-
-    <!-- Кастомное окно подтверждения от Google -->
-    <div class="google-alert" id="googleAlert">
-        <div class="google-box">
-            <div class="google-header">
-                <div class="google-logo">
-                    <span class="g-g">G</span><span class="g-o1">o</span><span class="g-o2">o</span><span class="g-g">g</span><span class="g-l">l</span><span class="g-o1">e</span>
-                </div>
-                <div class="google-title" id="googleAlertTitle">Подтверждение транзакции</div>
-            </div>
-            <div class="google-body" id="googleAlertBody"></div>
-            <div class="google-footer">
-                <button class="google-btn google-btn-cancel" onclick="closeGoogleAlert(false)">Отмена</button>
-                <button class="google-btn google-btn-confirm" onclick="closeGoogleAlert(true)">Подтвердить</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Шапка OZON Pets -->
     <header>
-        <div class="header-container">
-            <div class="header-top">
-                <div class="geo-delivery">
-                    <span>Питомец приедет в город: 
-                        <select id="citySelect" onchange="updatePvzOptions()">
-                            <option value="Москва">Москва</option>
-                            <option value="Санкт-Петербург">Санкт-Петербург</option>
-                            <option value="Новосибирск">Новосибирск</option>
-                        </select>
-                    </span>
-                    <span>Центр выдачи: 
-                        <select id="pvzSelect"></select>
-                    </span>
-                </div>
-                <div>🐾 Все питомцы имеют ветеринарный паспорт и прививки</div>
-            </div>
-            <div class="header-main">
-                <div class="logo" onclick="filterCategory('all')">OZON<span>Pets</span></div>
-                <div class="search-bar">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="searchInput" placeholder="Искать щенков, корма, лежанки, миски..." oninput="searchProducts()">
-                </div>
-                <button class="cart-btn" onclick="toggleCart(true)">
-                    🛒 Корзина <span class="cart-count" id="cartCount">0</span>
-                </button>
-            </div>
-        </div>
+        <h1>🐾 Лапки и Хвостики</h1>
+        <p>Найдите своего идеального верного друга у нас</p>
     </header>
 
-    <!-- Основной интерфейс -->
     <div class="container">
-        <aside class="sidebar">
-            <h3>Категории Ozon Pets</h3>
-            <button class="filter-btn active" onclick="filterCategory('all', this)">Все для собак</button>
-            <button class="filter-btn" onclick="filterCategory('small-dogs', this)">Маленькие породы (Шпиц, Мопс)</button>
-            <button class="filter-btn" onclick="filterCategory('big-dogs', this)">Крупные породы (Овчарки, Лабрадор)</button>
-            <button class="filter-btn" onclick="filterCategory('care', this)">Лежанки и миски</button>
-            <button class="filter-btn" onclick="filterCategory('food', this)">Сухие корма премиум</button>
-        </aside>
+        <h2>Наши питомцы в наличии</h2>
+        
+        <div class="catalog">
+            <!-- Карточка 1 -->
+            <div class="card">
+                <img src="https://unsplash.com" alt="Щенок Корги">
+                <div class="card-content">
+                    <h3>Корги Пемброк</h3>
+                    <p>Возраст: 2 месяца. Привит, есть родословная.</p>
+                    <div class="price">45 000 ₽</div>
+                    <a href="#order" class="btn">Забронировать</a>
+                </div>
+            </div>
 
-        <main class="products-grid" id="productsGrid"></main>
-    </div>
+            <!-- Карточка 2 -->
+            <div class="card">
+                <img src="https://unsplash.com" alt="Котенок">
+                <div class="card-content">
+                    <h3>Британский котенок</h3>
+                    <p>Возраст: 3 месяца. Приучен к лотку, игривый.</p>
+                    <div class="price">25 000 ₽</div>
+                    <a href="#order" class="btn">Забронировать</a>
+                </div>
+            </div>
 
-    <!-- Модальное окно Корзины -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="toggleCart(false)">&times;</span>
-            <h2>Ваша зоо-корзина</h2>
-            <div id="cartItemsList" style="margin-top: 15px;"></div>
-            <div class="cart-total" id="cartTotalSum">Итого: 0 ₽</div>
-            <button class="checkout-btn" onclick="startCheckoutProcess()">Оформить питомцев и товары</button>
+            <!-- Карточка 3 -->
+            <div class="card">
+                <img src="https://unsplash.com" alt="Кролик">
+                <div class="card-content">
+                    <h3>Декоративный кролик</h3>
+                    <p>Возраст: 1.5 месяца. Пушистый и дружелюбный.</p>
+                    <div class="price">5 000 ₽</div>
+                    <a href="#order" class="btn">Забронировать</a>
+                </div>
+            </div>
+        </div>
+
+        <h2 id="order">Оставить заявку на питомца</h2>
+        <div class="order-form">
+            <form action="#" method="POST">
+                <div class="form-group">
+                    <label for="name">Ваше имя:</label>
+                    <input type="text" id="name" required placeholder="Иван Петров">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Номер телефона:</label>
+                    <input type="tel" id="phone" required placeholder="+7 (999) 000-00-00">
+                </div>
+                <div class="form-group">
+                    <label for="pet">Кого вы хотите выбрать?</label>
+                    <select id="pet">
+                        <option value="corgi">Корги Пемброк</option>
+                        <option value="cat">Британский котенок</option>
+                        <option value="rabbit">Декоративный кролик</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Отправить заявку</button>
+            </form>
         </div>
     </div>
 
-    <script>
-        const pvzData = {
-            "Москва": ["Зоо-Терминал Центр, д. 5", "ул. Ленина, д. 40 (с ветеринаром)"],
-            "Санкт-Петербург": ["Невский зоо-хаб, д. 12"],
-            "Новосибирск": ["Пункт «Сибирь-Питомцы», ангар 2"]
-        };
+    <footer>
+        <p>&copy; 2026 Питомник "Лапки и Хвостики". Все права защищены.</p>
+    </footer>
 
-        // База данных товаров маркетплейса
-        const products = [
-            // Маленькие собаки
-            { id: 1, title: "Щенок Померанского Шпица (мишка)", price: 45000, category: "small-dogs", img: "🐕", meta: "Возраст: 3 мес." },
-            { id: 2, title: "Щенок Мопса бежевого (родословная)", price: 38000, category: "small-dogs", img: "🐶", meta: "Возраст: 2.5 мес." },
-            { id: 3, title: "Щенок Чихуахуа мини", price: 32000, category: "small-dogs", img: "🐩", meta: "Возраст: 2 мес." },
-            
-            // Большие собаки
-            { id: 4, title: "Щенок Немецкой Овчарки (чепрачный)", price: 55000, category: "big-dogs", img: "🦮", meta: "Возраст: 3.5 мес." },
-            { id: 5, title: "Щенок Лабрадора Ретривера (золотистый)", price: 48000, category: "big-dogs", img: "🐕‍🦺", meta: "Возраст: 3 мес." },
-            
-            // Лежанки и миски
-            { id: 6, title: "Мягкая лежанка-пуфик XXL для собак", price: 3400, category: "care", img: "🛏️", meta: "Размер: 100х80 см" },
-            { id: 7, title: "Умная двойная миска с автопоилкой", price: 1800, category: "care", img: "🥣", meta: "Объем: 1.5 л" },
-            { id: 8, title: "Чехол защитный для перевозки собак в авто", price: 2200, category: "care", img: "🚗", meta: "Водонепроницаемый" },
-            
-            // Корма
-            { id: 9, title: "Сухой корм Ozon-Champ для щенков (12кг)", price: 6200, category: "food", img: "🥩", meta: "Вкус: Ягненок/Рис" },
-            { id: 10, title: "Гипоаллергенный премиум корм (15кг)", price: 7800, category: "food", img: "🦴", meta: "Для крупных пород" }
-        ];
-
-        let cart = {}; 
-        let currentCategory = 'all';
-        let onGoogleConfirmCallback = null;
-
-        function showToast(text) {
-            const toast = document.getElementById('toastNotification');
-            toast.innerText = text;
-            toast.style.display = 'block';
-            setTimeout(() => toast.style.display = 'none', 2500);
-        }
-
-        function openGoogleAlert(text, confirmCallback) {
-            document.getElementById('googleAlertBody').innerText = text;
-            onGoogleConfirmCallback = confirmCallback;
-            document.getElementById('googleAlert').style.display = 'flex';
-        }
-
-        function closeGoogleAlert(isConfirmed) {
-            document.getElementById('googleAlert').style.display = 'none';
-            if (isConfirmed && onGoogleConfirmCallback) {
-                onGoogleConfirmCallback();
-            }
-            onGoogleConfirmCallback = null;
-        }
-
-        function updatePvzOptions() {
-            const city = document.getElementById('citySelect').value;
-            const pvzSelect = document.getElementById('pvzSelect');
-            pvzSelect.innerHTML = '';
-            pvzData[city].forEach(pvz => {
-                const opt = document.createElement('option');
-                opt.value = pvz; opt.innerText = pvz;
-                pvzSelect.appendChild(opt);
-            });
-        }
-
-        function renderProducts(productsToDisplay) {
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
-
-            productsToDisplay.forEach(product => {
-                const cardPrice = Math.floor(product.price * 0.9); // Скидка Ozon Pets 10%
-
-                const card = document.createElement('div');
-                card.className = 'product-card';
-                card.innerHTML = `
-                    <div class="product-img">${product.img}</div>
-                    <div class="price-block">
-                        <div>
-                            <span class="ozon-price">${cardPrice.toLocaleString()} ₽</span>
-                            <span class="ozon-label">Ozon Карта</span>
-                        </div>
-                        <div class="old-price">${product.price.toLocaleString()} ₽</div>
-                    </div>
-                    <div class="product-title">${product.title}</div>
-                    <div class="product-meta">${product.meta}</div>
-                    <button class="add-to-cart" onclick="addToCart(${product.id})">В корзину</button>
-                `;
-                grid.appendChild(card);
-            });
-        }
-
-        function filterCategory(category, buttonElement) {
-            currentCategory = category;
-            if(buttonElement) {
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                buttonElement.classList.add('active');
-            }
-            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
-            renderProducts(filtered);
-        }
-
-        function searchProducts() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = products.filter(product => {
-                return product.title.toLowerCase().includes(query) && (currentCategory === 'all' || product.category === currentCategory);
-            });
-            renderProducts(filtered);
-        }
-
-        function addToCart(productId) {
-            cart[productId] = (cart[productId] || 0) + 1;
-            updateCartCounter();
-            showToast("🐾 Добавлено в вашу корзину товаров!");
-        }
-
-        function changeQty(productId, amount) {
-            if (!cart[productId]) return;
-            cart[productId] += amount;
-            if (cart[productId] <= 0) delete cart[productId];
-            updateCartCounter();
-            renderCartItems();
-        }
-
-        function updateCartCounter() {
-            let count = Object.values(cart).reduce((a, b) => a + b, 0);
-            document.getElementById('cartCount').innerText = count;
-        }
-
-        function toggleCart(show) {
-            document.getElementById('cartModal').style.display = show ? 'flex' : 'none';
-            if (show) renderCartItems();
-        }
-
-        function renderCartItems() {
-            const list = document.getElementById('cartItemsList');
-            const totalSumEl = document.getElementById('cartTotalSum');
-            list.innerHTML = '';
-
-            let totalSum = 0;
-            for (let id in cart) {
-                const product = products.find(p => p.id == id);
-                const count = cart[id];
-                const priceWithCard = Math.floor(product.price * 0.9);
-                const cost = priceWithCard * count;
-                totalSum += cost;
-
-                const row = document.createElement('div');
-                row.className = 'cart-item';
-                row.innerHTML = `
-                    <span style="font-size:24px;">${product.img}</span>
-                    <div>
-                        <div style="font-weight:600; font-size:14px;">${product.title}</div>
-                        <div style="color:#00b06c; font-size:12px;">${priceWithCard.toLocaleString()} ₽</div>
-                    </div>
-                    <div class="cart-item-qty">
-                        <button class="qty-btn" onclick="changeQty(${product.id}, -1)">−</button>
-                        <span style="font-weight:600; font-size:14px;">${count} шт.</span>
-                        <button class="qty-btn" onclick="changeQty(${product.id}, 1)">+</button>
-                    </div>
-                    <strong style="min-width:75px; text-align:right;">${cost.toLocaleString()} ₽</strong>
-                `;
-                list.appendChild(row);
-            }
-
-            totalSumEl.innerText = `Итого к оплате: ${totalSum.toLocaleString()} ₽`;
-            if (Object.keys(cart).length === 0) {
-                list.innerHTML = '<p style="color:#808d9a; text-align:center; padding:15px;">Ваша зоо-корзина пуста.</p>';
-            }
-        }
-
-        function startCheckoutProcess() {
-            let totalSum = 0;
-            for (let id in cart) {
-                const product = products.find(p => p.id == id);
-                totalSum += Math.floor(product.price * 0.9) * cart[id];
-            }
-
-            if (totalSum === 0) {
-                showToast("❌ Ваша корзина пуста!");
-                return;
-            }
-
-            toggleCart(false);
-
-            const city = document.getElementById('citySelect').value;
-            const pvz = document.getElementById('pvzSelect').value;
-
-            // Кастомное всплывающее подтверждение в стиле Google
-            openGoogleAlert(
-                `Безопасный запрос от Google Pay. Списать ${totalSum.toLocaleString()} ₽ с вашей карты на маркетплейсе OZON Pets? Доставка питомцев и зоотоваров будет произведена в г. ${city}, по адресу: ${pvz}.`,
-                () => {
-                    showToast("🎉 Оплата принята! Документы и вет-паспорт оформляются.");
-                    cart = {};
-                    updateCartCounter();
-                }
-            );
-        }
-
-        // Запуск при открытии страницы
-        updatePvzOptions();
-        renderProducts(products);
-    </script>
 </body>
 </html>
