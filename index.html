@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OZON — Мега-Маркетплейс</title>
+    <title>OZON Pets — Маркетплейс породистых собак и товаров</title>
     <style>
         * {
             margin: 0;
@@ -18,6 +17,7 @@
             color: #101114;
         }
 
+        /* Шапка сайта в стиле Ozon */
         header {
             background-color: #ffffff;
             border-bottom: 1px solid #e0e5ed;
@@ -59,16 +59,21 @@
         }
 
         .logo {
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 900;
             color: #005bff;
             cursor: pointer;
             letter-spacing: -1px;
         }
 
-        .logo span { color: #ff0055; }
+        .logo span {
+            color: #00b06c;
+        }
 
-        .search-bar { flex-grow: 1; position: relative; }
+        .search-bar {
+            flex-grow: 1;
+            position: relative;
+        }
 
         .search-bar input {
             width: 100%;
@@ -87,46 +92,42 @@
             color: #808d9a;
         }
 
-        .nav-buttons { display: flex; gap: 20px; align-items: center; }
-
-        .nav-btn {
-            background: none;
+        .cart-btn {
+            background: #005bff;
             border: none;
-            color: #001a34;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            position: relative;
-            gap: 4px;
-        }
-
-        .nav-btn:hover { color: #005bff; }
-        .nav-btn-icon { font-size: 22px; }
-
-        .badge {
-            position: absolute;
-            top: -5px;
-            right: 5px;
-            background-color: #ff0055;
             color: white;
-            font-size: 11px;
-            padding: 1px 6px;
-            border-radius: 10px;
-            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
         }
 
+        .cart-btn:hover {
+            background: #004dd6;
+        }
+
+        .cart-count {
+            background-color: #ff0055;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        /* Главная сетка */
         .container {
             max-width: 1300px;
             margin: 24px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 280px 1fr;
+            grid-template-columns: 260px 1fr;
             gap: 24px;
         }
 
+        /* Боковая панель категорий */
         .sidebar {
             background: #ffffff;
             padding: 20px;
@@ -135,7 +136,11 @@
             border: 1px solid #e0e5ed;
         }
 
-        .sidebar h3 { font-size: 16px; margin-bottom: 12px; color: #001a34; }
+        .sidebar h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: #001a34;
+        }
 
         .filter-btn {
             display: block;
@@ -151,12 +156,21 @@
             transition: 0.15s;
         }
 
-        .filter-btn:hover { background: #f2f4f7; color: #005bff; }
-        .filter-btn.active { background: #e6f0ff; color: #005bff; font-weight: 600; }
+        .filter-btn:hover {
+            background: #f2f4f7;
+            color: #005bff;
+        }
 
+        .filter-btn.active {
+            background: #e6f0ff;
+            color: #005bff;
+            font-weight: 600;
+        }
+
+        /* Витрина карточек */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 20px;
         }
 
@@ -167,47 +181,52 @@
             border: 1px solid #e0e5ed;
             display: flex;
             flex-direction: column;
-            position: relative;
             padding: 12px;
             transition: box-shadow 0.2s;
         }
 
-        .product-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
-
-        .favorite-icon {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(255,255,255,0.8);
-            border: none;
-            font-size: 20px;
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 5;
+        .product-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
         }
 
-        .favorite-icon.active { color: #ff0055; }
-
-        .product-img-placeholder {
-            height: 180px;
+        .product-img {
+            height: 170px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 55px;
+            font-size: 65px;
             background-color: #f7f9fa;
             border-radius: 8px;
             margin-bottom: 12px;
         }
 
-        .price-block { margin-bottom: 8px; }
-        .ozon-card-price { font-size: 20px; font-weight: 800; color: #00b06c; }
-        .ozon-card-label { font-size: 11px; background-color: #e6f7f0; color: #00b06c; padding: 1px 4px; border-radius: 4px; font-weight: bold; margin-left: 4px; }
-        .default-price { font-size: 14px; color: #707f8d; text-decoration: line-through; margin-top: 2px; }
+        /* Цены */
+        .price-block {
+            margin-bottom: 8px;
+        }
+
+        .ozon-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: #00b06c;
+        }
+
+        .ozon-label {
+            font-size: 11px;
+            background-color: #e6f7f0;
+            color: #00b06c;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-left: 4px;
+        }
+
+        .old-price {
+            font-size: 13px;
+            color: #707f8d;
+            text-decoration: line-through;
+            margin-top: 2px;
+        }
 
         .product-title {
             font-size: 14px;
@@ -215,10 +234,17 @@
             line-height: 1.4;
             margin-bottom: 12px;
             flex-grow: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            font-weight: 600;
+        }
+
+        .product-meta {
+            font-size: 12px;
+            color: #707f8d;
+            margin-bottom: 10px;
+            background: #f2f4f7;
+            padding: 4px 8px;
+            border-radius: 4px;
+            width: fit-content;
         }
 
         .add-to-cart {
@@ -230,65 +256,163 @@
             cursor: pointer;
             font-weight: 600;
             font-size: 14px;
+            transition: 0.15s;
         }
 
-        .add-to-cart:hover { background-color: #004dd6; }
+        .add-to-cart:hover {
+            background-color: #004dd6;
+        }
 
+        /* Модальное окно Корзины */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,26,52,0.5);
-            justify-content: center; align-items: center; z-index: 200;
+            justify-content: center; align-items: center;
+            z-index: 200;
         }
 
         .modal-content {
-            background: white; padding: 24px; border-radius: 16px;
-            width: 90%; max-width: 550px; max-height: 85vh;
-            overflow-y: auto; position: relative;
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
         }
 
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: #808d9a; }
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 24px; cursor: pointer;
+            color: #808d9a;
+        }
 
         .cart-item {
-            display: grid; grid-template-columns: auto 1fr auto auto;
-            align-items: center; gap: 15px; padding: 15px 0;
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
             border-bottom: 1px solid #e0e5ed;
         }
 
         .cart-item-qty {
-            display: flex; align-items: center; gap: 8px;
-            background: #f2f4f7; padding: 4px 8px; border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f2f4f7;
+            padding: 4px 8px;
+            border-radius: 6px;
         }
 
-        .qty-btn { background: none; border: none; font-weight: bold; font-size: 16px; cursor: pointer; width: 20px; color: #005bff; }
-        .promo-block { margin-top: 15px; display: flex; gap: 10px; }
-        .promo-block input { flex-grow: 1; padding: 8px 12px; border: 1px solid #e0e5ed; border-radius: 6px; }
-        .promo-block button { background: #101114; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
-        .cart-total { margin-top: 20px; font-size: 18px; font-weight: bold; text-align: right; border-top: 2px solid #f2f4f7; padding-top: 15px; }
-        .checkout-btn { background: #ff0055; color: white; border: none; width: 100%; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .qty-btn {
+            background: none; border: none;
+            font-weight: bold; font-size: 16px;
+            cursor: pointer; width: 20px; color: #005bff;
+        }
 
-        .payment-form { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-        .payment-form input { padding: 12px; border: 1px solid #e0e5ed; border-radius: 8px; }
-        .pay-submit-btn { background: #005bff; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .cart-total {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: right;
+            border-top: 2px solid #f2f4f7;
+            padding-top: 15px;
+        }
 
-        /* Кастомное всплывающее уведомление */
-        .toast {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: #001a34;
+        .checkout-btn {
+            background: #ff0055;
             color: white;
-            padding: 16px 28px;
-            border-radius: 10px;
-            z-index: 300;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* Кастомные уведомления в стиле GOOGLE */
+        .google-alert {
             display: none;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.25);
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            justify-content: center; align-items: center;
+            z-index: 400;
+        }
+
+        .google-box {
+            background: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 420px;
+            padding: 24px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+        }
+
+        .google-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .google-logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .g-g { color: #4285F4; }
+        .g-o1 { color: #EA4335; }
+        .g-o2 { color: #FBBC05; }
+        .g-l { color: #34A853; }
+
+        .google-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #202124;
+        }
+
+        .google-body {
+            font-size: 14px;
+            color: #5f6368;
+            line-height: 1.5;
+            margin-bottom: 24px;
+        }
+
+        .google-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .google-btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
             font-size: 14px;
             font-weight: 500;
-            border-left: 5px solid #005bff;
-            max-width: 350px;
-            line-height: 1.4;
+            cursor: pointer;
+        }
+
+        .google-btn-cancel { background: none; color: #1a73e8; }
+        .google-btn-cancel:hover { background: #f8f9fa; }
+        .google-btn-confirm { background: #1a73e8; color: white; }
+        .google-btn-confirm:hover { background: #1557b0; }
+
+        /* Всплывающий нижний тост */
+        .toast {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            background: #001a34; color: white;
+            padding: 12px 24px; border-radius: 8px;
+            z-index: 300; display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
         @media (max-width: 768px) {
@@ -301,129 +425,133 @@
 </head>
 <body>
 
-    <!-- Всплывающий Тост -->
+    <!-- Всплывающий тост -->
     <div id="toastNotification" class="toast"></div>
 
+    <!-- Кастомное окно подтверждения от Google -->
+    <div class="google-alert" id="googleAlert">
+        <div class="google-box">
+            <div class="google-header">
+                <div class="google-logo">
+                    <span class="g-g">G</span><span class="g-o1">o</span><span class="g-o2">o</span><span class="g-g">g</span><span class="g-l">l</span><span class="g-o1">e</span>
+                </div>
+                <div class="google-title" id="googleAlertTitle">Подтверждение транзакции</div>
+            </div>
+            <div class="google-body" id="googleAlertBody"></div>
+            <div class="google-footer">
+                <button class="google-btn google-btn-cancel" onclick="closeGoogleAlert(false)">Отмена</button>
+                <button class="google-btn google-btn-confirm" onclick="closeGoogleAlert(true)">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Шапка OZON Pets -->
     <header>
         <div class="header-container">
             <div class="header-top">
                 <div class="geo-delivery">
-                    <span>Город: 
+                    <span>Питомец приедет в город: 
                         <select id="citySelect" onchange="updatePvzOptions()">
                             <option value="Москва">Москва</option>
                             <option value="Санкт-Петербург">Санкт-Петербург</option>
+                            <option value="Новосибирск">Новосибирск</option>
                         </select>
                     </span>
-                    <span>ПВЗ: <select id="pvzSelect"></select></span>
+                    <span>Центр выдачи: 
+                        <select id="pvzSelect"></select>
+                    </span>
                 </div>
-                <div>Доставка за 1 день • Новинки 2026</div>
+                <div>🐾 Все питомцы имеют ветеринарный паспорт и прививки</div>
             </div>
             <div class="header-main">
-                <div class="logo" onclick="filterCategory('all')">OZON<span>.</span></div>
+                <div class="logo" onclick="filterCategory('all')">OZON<span>Pets</span></div>
                 <div class="search-bar">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="searchInput" placeholder="Искать айфоны, микросхемы, лежанки..." oninput="searchProducts()">
+                    <input type="text" id="searchInput" placeholder="Искать щенков, корма, лежанки, миски..." oninput="searchProducts()">
                 </div>
-                <div class="nav-buttons">
-                    <button class="nav-btn" onclick="toggleFavoritesModal(true)">
-                        <span class="nav-btn-icon">❤️</span><span>Избранное</span><span class="badge" id="favCount">0</span>
-                    </button>
-                    <button class="nav-btn" onclick="toggleCart(true)">
-                        <span class="nav-btn-icon">🛒</span><span>Корзина</span><span class="badge" id="cartCount">0</span>
-                    </button>
-                </div>
+                <button class="cart-btn" onclick="toggleCart(true)">
+                    🛒 Корзина <span class="cart-count" id="cartCount">0</span>
+                </button>
             </div>
         </div>
     </header>
 
+    <!-- Основной интерфейс -->
     <div class="container">
         <aside class="sidebar">
-            <h3>Категории</h3>
-            <button class="filter-btn active" onclick="filterCategory('all', this)">Все категории</button>
-            <button class="filter-btn" onclick="filterCategory('phones', this)">📱 Смартфоны Apple</button>
-            <button class="filter-btn" onclick="filterCategory('chips', this)">⚡ Микросхемы и Техника</button>
-            <button class="filter-btn" onclick="filterCategory('other', this)">📦 Разное и Зоотовары</button>
+            <h3>Категории Ozon Pets</h3>
+            <button class="filter-btn active" onclick="filterCategory('all', this)">Все для собак</button>
+            <button class="filter-btn" onclick="filterCategory('small-dogs', this)">Маленькие породы (Шпиц, Мопс)</button>
+            <button class="filter-btn" onclick="filterCategory('big-dogs', this)">Крупные породы (Овчарки, Лабрадор)</button>
+            <button class="filter-btn" onclick="filterCategory('care', this)">Лежанки и миски</button>
+            <button class="filter-btn" onclick="filterCategory('food', this)">Сухие корма премиум</button>
         </aside>
 
         <main class="products-grid" id="productsGrid"></main>
     </div>
 
-    <!-- Модалка Корзины -->
+    <!-- Модальное окно Корзины -->
     <div class="modal" id="cartModal">
         <div class="modal-content">
             <span class="close-modal" onclick="toggleCart(false)">&times;</span>
-            <h2>Корзина</h2>
+            <h2>Ваша зоо-корзина</h2>
             <div id="cartItemsList" style="margin-top: 15px;"></div>
-            <div class="promo-block">
-                <input type="text" id="promoInput" placeholder="Промокод (OZON2026)">
-                <button onclick="applyPromo()">Применить</button>
-            </div>
             <div class="cart-total" id="cartTotalSum">Итого: 0 ₽</div>
-            <button class="checkout-btn" onclick="openPaymentModal()">Перейти к оформлению</button>
-        </div>
-    </div>
-
-    <!-- Модалка Избранного -->
-    <div class="modal" id="favModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="toggleFavoritesModal(false)">&times;</span>
-            <h2>Избранное</h2>
-            <div id="favItemsList" style="margin-top: 15px; display: grid; gap: 10px;"></div>
-        </div>
-    </div>
-
-    <!-- Оплата -->
-    <div class="modal" id="paymentModal">
-        <div class="modal-content" style="max-width: 400px;">
-            <span class="close-modal" onclick="togglePayment(false)">&times;</span>
-            <h2 style="color: #005bff; text-align: center;">Ozon Оплата</h2>
-            <p id="paymentTargetPvz" style="font-size: 12px; color: #707f8d; margin-top: 5px; text-align: center;"></p>
-            <div style="font-size: 26px; font-weight: bold; text-align: center; margin: 15px 0; color:#00b06c;" id="paymentSum">0 ₽</div>
-            <div class="payment-form">
-                <input type="text" id="cardNumber" placeholder="Номер карты" maxlength="19" oninput="formatCardNumber(this)">
-                <div style="display:flex; gap:10px;">
-                    <input type="text" id="cardExpiry" placeholder="ММ/ГГ" maxlength="5" style="width:50%;">
-                    <input type="password" id="cardCvv" placeholder="CVV" maxlength="3" style="width:50%;">
-                </div>
-                <button class="pay-submit-btn" onclick="processPayment()">Оплатить заказ</button>
-            </div>
+            <button class="checkout-btn" onclick="startCheckoutProcess()">Оформить питомцев и товары</button>
         </div>
     </div>
 
     <script>
         const pvzData = {
-            "Москва": ["ул. Арбат, д. 2", "пр-т Мира, д. 15"],
-            "Санкт-Петербург": ["Невский пр-т, д. 45", "ул. Садовая, д. 12"]
+            "Москва": ["Зоо-Терминал Центр, д. 5", "ул. Ленина, д. 40 (с ветеринаром)"],
+            "Санкт-Петербург": ["Невский зоо-хаб, д. 12"],
+            "Новосибирск": ["Пункт «Сибирь-Питомцы», ангар 2"]
         };
 
-        // Обновленная база данных с телефонами, чипами и разным + кастомные месседжи
+        // База данных товаров маркетплейса
         const products = [
-            // Смартфоны
-            { id: 1, title: "Смартфон Apple iPhone 13 128GB (Темная ночь)", price: 55000, category: "phones", img: "📱", msgCart: "Классика! iPhone 13 добавлен. Проверенный временем выбор.", msgFav: "Вы сохранили iPhone 13. Цена на него сейчас отличная!" },
-            { id: 2, title: "Смартфон Apple iPhone 14 Pro 256GB", price: 82000, category: "phones", img: "📲", msgCart: "Dynamic Island ждет вас! iPhone 14 Pro отправлен в корзину.", msgFav: "iPhone 14 Pro добавлен в список желаний ❤️" },
-            { id: 3, title: "Смартфон Apple iPhone 15 Pro Max 512GB", price: 124000, category: "phones", img: "👑", msgCart: "Титановый флагман! iPhone 15 Pro Max добавлен. Отличный выбор камер.", msgFav: "Флагман в избранном! Ждем снижения цены?" },
-            { id: 4, title: "Смартфон Apple iPhone 16 Pro 256GB", price: 145000, category: "phones", img: "💎", msgCart: "Кнопка Camera Control в деле! iPhone 16 Pro добавлен в корзину.", msgFav: "iPhone 16 Pro добавлен в избранное." },
-            { id: 5, title: "Смартфон Apple iPhone 17 Pro Max 1TB (Эксклюзив 2026)", price: 199000, category: "phones", img: "🚀", msgCart: "Шок! Новейший iPhone 17 Pro Max забронирован за вами на складе!", msgFav: "Вы добавили в избранное будущее — iPhone 17 Pro Max! 🌌" },
+            // Маленькие собаки
+            { id: 1, title: "Щенок Померанского Шпица (мишка)", price: 45000, category: "small-dogs", img: "🐕", meta: "Возраст: 3 мес." },
+            { id: 2, title: "Щенок Мопса бежевого (родословная)", price: 38000, category: "small-dogs", img: "🐶", meta: "Возраст: 2.5 мес." },
+            { id: 3, title: "Щенок Чихуахуа мини", price: 32000, category: "small-dogs", img: "🐩", meta: "Возраст: 2 мес." },
             
-            // Техника и микросхемы
-            { id: 6, title: "Микросхема логическая NE555 (Комплект 10 шт)", price: 350, category: "chips", img: "👾", msgCart: "Таймеры NE555 добавлены. Идеально для ваших инженерных схем!", msgFav: "NE555 в избранном. Пора собирать плату!" },
-            { id: 7, title: "Плата развития Микроконтроллер (Аналог Arduino Uno R3)", price: 850, category: "chips", img: "🔌", msgCart: "Контроллер в корзине. Внимание: берегите компоненты от статического электричества! ⚡", msgFav: "Контроллер сохранен. Кажется, кто-то готовит крутой проект!" },
-            { id: 8, title: "Набор резисторов и конденсаторов для пайки (600 шт)", price: 600, category: "chips", img: "📟", msgCart: "Компоненты добавлены. Полный набор радиолюбителя готов к отправке.", msgFav: "Набор деталей сохранен в закладках." },
+            // Большие собаки
+            { id: 4, title: "Щенок Немецкой Овчарки (чепрачный)", price: 55000, category: "big-dogs", img: "🦮", meta: "Возраст: 3.5 мес." },
+            { id: 5, title: "Щенок Лабрадора Ретривера (золотистый)", price: 48000, category: "big-dogs", img: "🐕‍🦺", meta: "Возраст: 3 мес." },
             
-            // Разное и зоотовары
-            { id: 9, title: "Прозрачный силиконовый чехол с MagSafe для iPhone", price: 1200, category: "other", img: "🛡️", msgCart: "Чехол добавлен. Защита для вашего смартфона — это важно!", msgFav: "Чехол отложен в избранное." },
-            { id: 10, title: "Миска для собак двойная на металлической подставке", price: 1450, category: "other", img: "🥣", msgCart: "Миска добавлена в корзину! Ваш пес скажет вам спасибо за удобный обед 🐕", msgFav: "Миска сохранена. Порадуйте питомца обновкой!" },
-            { id: 11, title: "Мягкая лежанка для собак и кошек Premium (70х50 см)", price: 2800, category: "other", img: "🛏️", msgCart: "Уютная лежанка в корзине! Хвостику будет супер-комфортно и тепло спать 🐾", msgFav: "Лежанка в избранном. Самое уютное место для сна питомца." }
+            // Лежанки и миски
+            { id: 6, title: "Мягкая лежанка-пуфик XXL для собак", price: 3400, category: "care", img: "🛏️", meta: "Размер: 100х80 см" },
+            { id: 7, title: "Умная двойная миска с автопоилкой", price: 1800, category: "care", img: "🥣", meta: "Объем: 1.5 л" },
+            { id: 8, title: "Чехол защитный для перевозки собак в авто", price: 2200, category: "care", img: "🚗", meta: "Водонепроницаемый" },
+            
+            // Корма
+            { id: 9, title: "Сухой корм Ozon-Champ для щенков (12кг)", price: 6200, category: "food", img: "🥩", meta: "Вкус: Ягненок/Рис" },
+            { id: 10, title: "Гипоаллергенный премиум корм (15кг)", price: 7800, category: "food", img: "🦴", meta: "Для крупных пород" }
         ];
 
-        let cart = {}; let favorites = []; let currentCategory = 'all'; let discountMultiplier = 1.0;
+        let cart = {}; 
+        let currentCategory = 'all';
+        let onGoogleConfirmCallback = null;
 
-        function showCustomToast(text, isMagenta = false) {
+        function showToast(text) {
             const toast = document.getElementById('toastNotification');
             toast.innerText = text;
-            toast.style.borderLeftColor = isMagenta ? '#ff0055' : '#005bff';
             toast.style.display = 'block';
-            setTimeout(() => toast.style.display = 'none', 3000);
+            setTimeout(() => toast.style.display = 'none', 2500);
+        }
+
+        function openGoogleAlert(text, confirmCallback) {
+            document.getElementById('googleAlertBody').innerText = text;
+            onGoogleConfirmCallback = confirmCallback;
+            document.getElementById('googleAlert').style.display = 'flex';
+        }
+
+        function closeGoogleAlert(isConfirmed) {
+            document.getElementById('googleAlert').style.display = 'none';
+            if (isConfirmed && onGoogleConfirmCallback) {
+                onGoogleConfirmCallback();
+            }
+            onGoogleConfirmCallback = null;
         }
 
         function updatePvzOptions() {
@@ -440,23 +568,23 @@
         function renderProducts(productsToDisplay) {
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = '';
-            if(productsToDisplay.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #808d9a;">Товары не найдены</p>';
-                return;
-            }
+
             productsToDisplay.forEach(product => {
-                const isFav = favorites.includes(product.id) ? 'active' : '';
-                const cardPrice = Math.floor(product.price * 0.85);
+                const cardPrice = Math.floor(product.price * 0.9); // Скидка Ozon Pets 10%
+
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <button class="favorite-icon ${isFav}" onclick="toggleFavorite(${product.id}, this)">❤️</button>
-                    <div class="product-img-placeholder">${product.img}</div>
+                    <div class="product-img">${product.img}</div>
                     <div class="price-block">
-                        <div><span class="ozon-card-price">${cardPrice.toLocaleString()} ₽</span><span class="ozon-card-label">Ozon Карта</span></div>
-                        <div class="default-price">${product.price.toLocaleString()} ₽ обычная</div>
+                        <div>
+                            <span class="ozon-price">${cardPrice.toLocaleString()} ₽</span>
+                            <span class="ozon-label">Ozon Карта</span>
+                        </div>
+                        <div class="old-price">${product.price.toLocaleString()} ₽</div>
                     </div>
                     <div class="product-title">${product.title}</div>
+                    <div class="product-meta">${product.meta}</div>
                     <button class="add-to-cart" onclick="addToCart(${product.id})">В корзину</button>
                 `;
                 grid.appendChild(card);
@@ -467,7 +595,7 @@
             currentCategory = category;
             if(buttonElement) {
                 document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                buttonElement.add('active');
+                buttonElement.classList.add('active');
             }
             const filtered = category === 'all' ? products : products.filter(p => p.category === category);
             renderProducts(filtered);
@@ -475,58 +603,29 @@
 
         function searchProducts() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = products.filter(p => p.title.toLowerCase().includes(query) && (currentCategory === 'all' || p.category === currentCategory));
+            const filtered = products.filter(product => {
+                return product.title.toLowerCase().includes(query) && (currentCategory === 'all' || product.category === currentCategory);
+            });
             renderProducts(filtered);
         }
 
         function addToCart(productId) {
             cart[productId] = (cart[productId] || 0) + 1;
             updateCartCounter();
-            
-            // Берем кастомное сообщение товара
-            const product = products.find(p => p.id === productId);
-            showCustomToast(product.msgCart || "Товар добавлен в корзину!");
+            showToast("🐾 Добавлено в вашу корзину товаров!");
         }
 
         function changeQty(productId, amount) {
             if (!cart[productId]) return;
             cart[productId] += amount;
             if (cart[productId] <= 0) delete cart[productId];
-            updateCartCounter(); renderCartItems();
+            updateCartCounter();
+            renderCartItems();
         }
 
         function updateCartCounter() {
-            document.getElementById('cartCount').innerText = Object.values(cart).reduce((a, b) => a + b, 0);
-        }
-
-        function toggleFavorite(productId, element) {
-            const index = favorites.indexOf(productId);
-            const product = products.find(p => p.id === productId);
-            if (index > -1) {
-                favorites.splice(index, 1);
-                element.classList.remove('active');
-                showCustomToast(`💔 Удалено: ${product.title}`, true);
-            } else {
-                favorites.push(productId);
-                element.classList.add('active');
-                showCustomToast(product.msgFav || "Добавлено в избранное!", true);
-            }
-            document.getElementById('favCount').innerText = favorites.length;
-        }
-
-        function toggleFavoritesModal(show) {
-            document.getElementById('favModal').style.display = show ? 'flex' : 'none';
-            if(show) {
-                const list = document.getElementById('favItemsList'); list.innerHTML = '';
-                if(favorites.length === 0) { list.innerHTML = '<p style="color:#707f8d; text-align:center;">Тут пока ничего нет</p>'; return; }
-                favorites.forEach(id => {
-                    const item = products.find(p => p.id === id);
-                    const row = document.createElement('div');
-                    row.style = 'display:flex; justify-content:space-between; align-items:center; background:#f2f4f7; padding:10px; border-radius:8px;';
-                    row.innerHTML = `<span>${item.img} ${item.title}</span><button onclick="addToCart(${item.id})" style="background:#005bff; color:white; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">В корзину</button>`;
-                    list.appendChild(row);
-                });
-            }
+            let count = Object.values(cart).reduce((a, b) => a + b, 0);
+            document.getElementById('cartCount').innerText = count;
         }
 
         function toggleCart(show) {
@@ -535,60 +634,73 @@
         }
 
         function renderCartItems() {
-            const list = document.getElementById('cartItemsList'); const totalSumEl = document.getElementById('cartTotalSum');
-            list.innerHTML = ''; let totalSum = 0;
+            const list = document.getElementById('cartItemsList');
+            const totalSumEl = document.getElementById('cartTotalSum');
+            list.innerHTML = '';
+
+            let totalSum = 0;
             for (let id in cart) {
-                const product = products.find(p => p.id == id); const count = cart[id];
-                const cardPrice = Math.floor(product.price * 0.85); const cost = cardPrice * count;
+                const product = products.find(p => p.id == id);
+                const count = cart[id];
+                const priceWithCard = Math.floor(product.price * 0.9);
+                const cost = priceWithCard * count;
                 totalSum += cost;
-                const row = document.createElement('div'); row.className = 'cart-item';
+
+                const row = document.createElement('div');
+                row.className = 'cart-item';
                 row.innerHTML = `
                     <span style="font-size:24px;">${product.img}</span>
-                    <div><div style="font-weight:600; font-size:14px;">${product.title}</div><div style="color:#00b06c; font-size:12px;">${cardPrice.toLocaleString()} ₽</div></div>
+                    <div>
+                        <div style="font-weight:600; font-size:14px;">${product.title}</div>
+                        <div style="color:#00b06c; font-size:12px;">${priceWithCard.toLocaleString()} ₽</div>
+                    </div>
                     <div class="cart-item-qty">
                         <button class="qty-btn" onclick="changeQty(${product.id}, -1)">−</button>
                         <span style="font-weight:600; font-size:14px;">${count} шт.</span>
                         <button class="qty-btn" onclick="changeQty(${product.id}, 1)">+</button>
                     </div>
-                    <strong>${cost.toLocaleString()} ₽</strong>
+                    <strong style="min-width:75px; text-align:right;">${cost.toLocaleString()} ₽</strong>
                 `;
                 list.appendChild(row);
             }
-            totalSum = Math.floor(totalSum * discountMultiplier);
+
             totalSumEl.innerText = `Итого к оплате: ${totalSum.toLocaleString()} ₽`;
-            if (Object.keys(cart).length === 0) list.innerHTML = '<p style="color:#808d9a; text-align:center; padding:15px;">Ваша корзина пуста</p>';
+            if (Object.keys(cart).length === 0) {
+                list.innerHTML = '<p style="color:#808d9a; text-align:center; padding:15px;">Ваша зоо-корзина пуста.</p>';
+            }
         }
 
-        function applyPromo() {
-            if(document.getElementById('promoInput').value.trim() === 'OZON2026') {
-                discountMultiplier = 0.9; showCustomToast("🏷️ Промокод активирован! Скидка 10% применена."); renderCartItems();
-            } else { alert("Неверный промокод"); }
-        }
-
-        function openPaymentModal() {
+        function startCheckoutProcess() {
             let totalSum = 0;
-            for (let id in cart) { totalSum += Math.floor(products.find(p => p.id == id).price * 0.85) * cart[id]; }
-            totalSum = Math.floor(totalSum * discountMultiplier);
-            if (totalSum === 0) { alert("Корзина пуста!"); return; }
-            toggleCart(false); togglePayment(true);
-            const city = document.getElementById('citySelect').value; const pvz = document.getElementById('pvzSelect').value;
-            document.getElementById('paymentSum').innerText = `${totalSum.toLocaleString()} ₽`;
-            document.getElementById('paymentTargetPvz').innerText = `Доставка: ПВЗ Ozon, г. ${city}, ${pvz}`;
+            for (let id in cart) {
+                const product = products.find(p => p.id == id);
+                totalSum += Math.floor(product.price * 0.9) * cart[id];
+            }
+
+            if (totalSum === 0) {
+                showToast("❌ Ваша корзина пуста!");
+                return;
+            }
+
+            toggleCart(false);
+
+            const city = document.getElementById('citySelect').value;
+            const pvz = document.getElementById('pvzSelect').value;
+
+            // Кастомное всплывающее подтверждение в стиле Google
+            openGoogleAlert(
+                `Безопасный запрос от Google Pay. Списать ${totalSum.toLocaleString()} ₽ с вашей карты на маркетплейсе OZON Pets? Доставка питомцев и зоотоваров будет произведена в г. ${city}, по адресу: ${pvz}.`,
+                () => {
+                    showToast("🎉 Оплата принята! Документы и вет-паспорт оформляются.");
+                    cart = {};
+                    updateCartCounter();
+                }
+            );
         }
 
-        function togglePayment(show) { document.getElementById('paymentModal').style.display = show ? 'flex' : 'none'; }
-        function formatCardNumber(input) { let v = input.value.replace(/\D/g, ''); input.value = v.match(/.{1,4}/g)?.join(' ') || ''; }
-        
-        function processPayment() {
-            if (document.getElementById('cardNumber').value.length < 19) { alert("Заполните карту!"); return; }
-            alert("Обработка транзакции банком...");
-            setTimeout(() => {
-                alert("🎉 Оплата прошла успешно!\nВаш заказ уже собирается на складе Ozon.");
-                cart = {}; updateCartCounter(); togglePayment(false);
-            }, 1000);
-        }
-
-        updatePvzOptions(); renderProducts(products);
+        // Запуск при открытии страницы
+        updatePvzOptions();
+        renderProducts(products);
     </script>
 </body>
 </html>
