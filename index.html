@@ -3,359 +3,391 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Моя Школа — Дневник</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Моя Школа — Полный Прототип</title>
     <style>
         :root {
-            --bg-main: #121214;
-            --bg-card: #1e1e22;
+            --bg-main: #0c0c0e;
+            --bg-card: #1c1c1e;
             --text-primary: #ffffff;
             --text-secondary: #8e8e93;
-            --accent-blue: #3b82f6;
-            --accent-red: #ff453a;
-            --badge-bg: #2c2c30;
+            --accent-blue: #2f80ed;
+            --accent-orange: #b84a00;
+            --border-color: #2c2c2e;
+            --bg-badge: #2c2c2e;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-primary);
             margin: 0;
             padding: 0;
-            padding-bottom: 80px; /* Отступ под нижнее меню */
+            padding-bottom: 90px;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Шапка профиля */
-        .header {
-            padding: 20px 16px 10px 16px;
+        /* Общая шапка для экранов */
+        .standard-header {
+            padding: 16px 16px 8px 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .profile-info {
-            display: flex;
-            flex-direction: column;
+        .header-profile-block { display: flex; align-items: center; gap: 12px; }
+        .mini-avatar {
+            width: 36px; height: 36px; background-color: var(--accent-orange);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 0.9rem;
         }
-        .profile-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: -0.3px;
-        }
-        .profile-role {
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-        .notification-icon {
-            font-size: 1.3rem;
-            cursor: pointer;
-        }
+        .profile-text { display: flex; flex-direction: column; }
+        .profile-name { font-size: 1rem; font-weight: 700; }
+        .profile-role { font-size: 0.8rem; color: var(--text-secondary); }
 
-        /* Календарная неделя */
-        .calendar-week {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 16px;
-            text-align: center;
-        }
-        .day-column {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 40px;
-        }
-        .day-name {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-        }
+        /* Вкладки/Экраны приложения */
+        .app-screen { display: none; }
+        .app-screen.active { display: block; }
+
+        /* --- ЭКРАН 1: РАСПИСАНИЕ --- */
+        .calendar-week { display: flex; justify-content: space-between; padding: 10px 16px; text-align: center; }
+        .day-column { display: flex; flex-direction: column; align-items: center; width: 42px; cursor: pointer; }
+        .day-name { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 8px; }
         .day-number {
-            font-size: 1rem;
-            font-weight: 600;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
+            font-size: 0.95rem; font-weight: 600; width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center; border-radius: 50%;
         }
-        .day-column.active .day-number {
-            background-color: var(--accent-blue);
-            color: white;
-        }
-        .day-column.weekend .day-number {
-            color: var(--accent-red);
-        }
-
-        /* Фильтры и кнопки действий */
-        .controls-row {
-            display: flex;
-            gap: 8px;
-            padding: 10px 16px;
-            overflow-x: auto;
-        }
+        .day-column.active .day-number { background-color: var(--accent-blue); color: white; }
+        .day-column.weekend .day-number { color: #ff453a; }
+        
+        .controls-row { display: flex; gap: 8px; padding: 10px 16px; }
         .btn-filter {
-            background-color: var(--bg-card);
-            border: none;
-            color: var(--text-primary);
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            background-color: var(--bg-card); border: none; color: var(--text-primary);
+            padding: 8px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 600;
         }
-        .btn-icon {
-            background-color: var(--bg-card);
-            border: none;
-            color: var(--text-primary);
-            padding: 8px 12px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-        }
+        
+        .schedule-container { padding: 0 16px; }
+        .lesson-card { background-color: var(--bg-card); border-radius: 16px; padding: 16px; position: relative; }
+        .lesson-meta { font-size: 0.78rem; color: var(--text-secondary); display: flex; gap: 8px; margin-bottom: 6px; }
+        .lesson-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 10px 0; }
+        .homework-box { display: flex; gap: 8px; font-size: 0.85rem; color: #a9a9b0; line-height: 1.4; }
+        .recess-line { display: flex; justify-content: space-between; align-items: center; padding: 12px 8px; font-size: 0.82rem; color: var(--text-secondary); }
 
-        /* Список расписания */
-        .schedule-container {
-            padding: 10px 16px;
+        /* --- ЭКРАН 2: ОЦЕНКИ --- */
+        .grades-top-bar { display: flex; gap: 8px; padding: 12px 16px; }
+        .date-selector {
+            background-color: var(--bg-card); border-radius: 12px; display: flex;
+            align-items: center; justify-content: space-between; padding: 0 12px; flex-grow: 1; font-weight: 600; font-size: 0.9rem;
         }
+        .arrow-btn { background: none; border: none; color: var(--text-primary); font-size: 1rem; padding: 10px; cursor: pointer; }
+        .btn-today { background-color: var(--bg-card); border: none; color: white; padding: 0 16px; border-radius: 12px; font-weight: 600; font-size: 0.9rem; }
+        
+        .grades-list { padding: 0 16px; }
+        .grade-block { background-color: var(--bg-card); border-radius: 16px; padding: 4px 16px; margin-bottom: 14px; }
+        .grade-block-title { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; margin-top: 12px; margin-bottom: 8px; font-weight: 700; }
+        .grade-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #2c2c2e; position: relative; cursor: pointer; }
+        .grade-item:last-child { border-bottom: none; }
+        
+        .grade-badge-container { display: flex; align-items: center; gap: 12px; }
+        .big-grade-badge {
+            width: 44px; height: 44px; background-color: #2c2c2e; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700; position: relative;
+        }
+        .grade-weight { position: absolute; bottom: 4px; right: 6px; font-size: 0.65rem; color: var(--text-secondary); font-weight: 400; }
+        .grade-info-text { display: flex; flex-direction: column; gap: 2px; }
+        .grade-subject { font-weight: 700; font-size: 1.05rem; }
+        .grade-type { font-size: 0.85rem; color: var(--text-secondary); }
+        .chevron-right { color: var(--text-secondary); font-size: 1.1rem; padding-right: 4px; }
+        
+        .toggle-view-container { display: flex; background-color: #1c1c1e; margin: 16px; padding: 4px; border-radius: 12px; }
+        .toggle-btn { width: 50%; background: none; border: none; color: var(--text-secondary); padding: 8px; border-radius: 10px; font-weight: 600; font-size: 0.9rem; }
+        .toggle-btn.active { background-color: #2c2c2e; color: white; }
 
-        /* Карточка урока */
-        .lesson-card {
-            background-color: var(--bg-card);
-            border-radius: 16px;
-            padding: 16px;
-            position: relative;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        /* --- ЭКРАН 5: ПРОФИЛЬ --- */
+        .profile-card { background-color: var(--bg-card); border-radius: 20px; margin: 16px; padding: 24px 16px; text-align: center; position: relative; }
+        .profile-card-avatar {
+            width: 80px; height: 80px; background-color: var(--accent-orange); border-radius: 50%;
+            margin: 0 auto 14px auto; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: 700;
         }
-        .lesson-meta {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            display: flex;
-            gap: 6px;
-            margin-bottom: 6px;
-        }
-        .lesson-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin: 0 0 14px 0;
-            color: #d1d1d6;
-        }
-        .homework-box {
-            display: flex;
-            gap: 8px;
-            align-items: flex-start;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-        .homework-icon {
-            font-size: 1rem;
-            margin-top: 1px;
-        }
-        .homework-text {
-            color: #a9a9b0;
-        }
-        /* Значок отсутствия или оценки */
-        .status-badge {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background-color: var(--badge-bg);
-            color: #aeaeae;
-            font-weight: 700;
-            font-size: 0.9rem;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-        }
-
-        /* Перемена */
-        .recess-line {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 8px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        .recess-title {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .profile-card-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+        .profile-card-role { font-size: 0.9rem; color: var(--text-secondary); }
+        .top-profile-btn { position: absolute; top: 16px; width: 32px; height: 32px; background-color: #2c2c2e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+        
+        .menu-section { background-color: var(--bg-card); border-radius: 16px; margin: 0 16px 14px 16px; padding: 4px 16px; }
+        .menu-item { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #2c2c2e; cursor: pointer; }
+        .menu-item:last-child { border-bottom: none; }
+        .menu-item-left { display: flex; align-items: center; gap: 14px; font-size: 0.98rem; font-weight: 500; }
+        .menu-icon-bg { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+        .dot-alert { width: 16px; height: 16px; background-color: #ff453a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: bold; margin-right: 8px; }
 
         /* Нижнее меню навигации */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #1c1c1e;
-            border-top: 1px solid #2c2c2e;
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px)) 0;
-            z-index: 100;
+            position: fixed; bottom: 0; left: 0; right: 0; background-color: #121214;
+            border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 8px 0; z-index: 200;
         }
         .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.65rem;
-            gap: 5px;
-            background: none;
-            border: none;
-            width: 20%;
+            display: flex; flex-direction: column; align-items: center; color: var(--text-secondary);
+            background: none; border: none; width: 20%; font-size: 0.65rem; gap: 4px; cursor: pointer;
         }
-        .nav-item.active {
-            color: var(--text-primary);
-        }
-        .nav-icon {
-            font-size: 1.3rem;
-        }
+        .nav-item.active { color: var(--text-primary); }
+        .nav-icon { font-size: 1.3rem; }
     </style>
 </head>
 <body>
 
-    <!-- Шапка профиля -->
-    <div class="header">
-        <div class="profile-info">
-            <span class="profile-name">Артём Рубцов</span>
-            <span class="profile-role">Ученик</span>
+    <!-- ================= ЭКРАН 1: РАСПИСАНИЕ ================= -->
+    <div id="screen-schedule" class="app-screen active">
+        <div class="standard-header">
+            <div class="header-profile-block">
+                <div class="mini-avatar">АР</div>
+                <div class="profile-text"><span class="profile-name">Артём Рубцов</span><span class="profile-role">Ученик</span></div>
+            </div>
+            <div style="font-size: 1.3rem;">🔔</div>
         </div>
-        <div class="notification-icon">🔔</div>
+
+        <div class="calendar-week">
+            <div class="day-column active" onclick="selectDay('пн', this)"><span class="day-name">Пн</span><span class="day-number">18</span></div>
+            <div class="day-column" onclick="selectDay('вт', this)"><span class="day-name">Вт</span><span class="day-number">19</span></div>
+            <div class="day-column" onclick="selectDay('ср', this)"><span class="day-name">Ср</span><span class="day-number">20</span></div>
+            <div class="day-column" onclick="selectDay('чт', this)"><span class="day-name">Чт</span><span class="day-number">21</span></div>
+            <div class="day-column" onclick="selectDay('пт', this)"><span class="day-name">Пт</span><span class="day-number">22</span></div>
+            <div class="day-column" onclick="selectDay('сб', this)"><span class="day-name">Сб</span><span class="day-number">23</span></div>
+            <div class="day-column weekend" onclick="selectDay('вс', this)"><span class="day-name">Вс</span><span class="day-number">24</span></div>
+        </div>
+
+        <div class="controls-row">
+            <button class="btn-filter">Май</button>
+            <button class="btn-filter">Вид</button>
+        </div>
+
+        <div class="schedule-container" id="lessons-box"></div>
     </div>
 
-    <!-- Календарь на неделю -->
-    <div class="calendar-week">
-        <div class="day-column">
-            <span class="day-name">Пн</span>
-            <span class="day-number">18</span>
+
+    <!-- ================= ЭКРАН 2: ОЦЕНКИ ================= -->
+    <div id="screen-grades" class="app-screen">
+        <div class="standard-header">
+            <div class="header-profile-block">
+                <div class="mini-avatar">АР</div>
+                <div class="profile-text"><span class="profile-name">Артём Рубцов</span><span class="profile-role">Ученик</span></div>
+            </div>
+            <div style="font-size: 1.3rem;">🔔</div>
         </div>
-        <div class="day-column">
-            <span class="day-name">Вт</span>
-            <span class="day-number">19</span>
+
+        <div class="grades-top-bar">
+            <div class="date-selector">
+                <button class="arrow-btn">‹</button><span>18 мая – 24 мая</span><button class="arrow-btn">›</button>
+            </div>
+            <button class="btn-today">Сегодня</button>
         </div>
-        <div class="day-column">
-            <span class="day-name">Ср</span>
-            <span class="day-number">20</span>
+
+        <div class="grades-list">
+            <!-- 19 МАЯ -->
+            <div class="grade-block-title">19 мая, вторник</div>
+            <div class="grade-block">
+                <div class="grade-item">
+                    <div class="grade-badge-container">
+                        <div class="big-grade-badge">5<span class="grade-weight">1</span></div>
+                        <div class="grade-info-text"><span class="grade-subject">Литература</span><span class="grade-type">Устный ответ</span></div>
+                    </div>
+                    <span class="chevron-right">›</span>
+                </div>
+                <div class="grade-item">
+                    <div class="grade-badge-container">
+                        <div class="big-grade-badge">5<span class="grade-weight">1</span></div>
+                        <div class="grade-info-text"><span class="grade-subject">Краеведение</span><span class="grade-type">Творческая работа</span></div>
+                    </div>
+                    <span class="chevron-right">›</span>
+                </div>
+            </div>
+
+            <!-- 18 МАЯ -->
+            <div class="grade-block-title">18 мая, понедельник</div>
+            <div class="grade-block">
+                <div class="grade-item">
+                    <div class="grade-badge-container">
+                        <div class="big-grade-badge" style="color: #ffd60a;">4<span class="grade-weight">1</span></div>
+                        <div class="grade-info-text"><span class="grade-subject">Математика</span><span class="grade-type">Устный ответ</span></div>
+                    </div>
+                    <span class="chevron-right">›</span>
+                </div>
+                <div class="grade-item">
+                    <div class="grade-badge-container">
+                        <div class="big-grade-badge">5<span class="grade-weight">1</span></div>
+                        <div class="grade-info-text"><span class="grade-subject">Русский язык</span><span class="grade-type">Практическая работа</span></div>
+                    </div>
+                    <span class="chevron-right">›</span>
+                </div>
+                <div class="grade-item">
+                    <div class="grade-badge-container">
+                        <div class="big-grade-badge" style="color: #ffd60a;">4<span class="grade-weight">1</span></div>
+                        <div class="grade-info-text"><span class="grade-subject">Физическая культура</span><span class="grade-type">Доклад</span></div>
+                    </div>
+                    <span class="chevron-right">›</span>
+                </div>
+            </div>
         </div>
-        <div class="day-column active">
-            <span class="day-name">Чт</span>
-            <span class="day-number">21</span>
-        </div>
-        <div class="day-column">
-            <span class="day-name">Пт</span>
-            <span class="day-number">22</span>
-        </div>
-        <div class="day-column">
-            <span class="day-name">Сб</span>
-            <span class="day-number">23</span>
-        </div>
-        <div class="day-column weekend">
-            <span class="day-name">Вс</span>
-            <span class="day-number">24</span>
+
+        <div class="toggle-view-container">
+            <button class="toggle-btn active">По дате</button>
+            <button class="toggle-btn">По предмету</button>
         </div>
     </div>
 
-    <!-- Управляющие кнопки -->
-    <div class="controls-row">
-        <button class="btn-filter">Май</button>
-        <button class="btn-filter">Вид</button>
-        <button class="btn-icon" style="margin-left: auto;">📤</button>
-        <button class="btn-icon">🎛️</button>
-        <button class="btn-icon">➕</button>
+
+    <!-- ================= ЭКРАН 5: ПРОФИЛЬ ================= -->
+    <div id="screen-profile" class="app-screen">
+        <div class="profile-card">
+            <div class="top-profile-btn" style="left: 16px; color: #2f80ed;">⚙️</div>
+            <div class="top-profile-btn" style="right: 16px; color: #2f80ed;">👤</div>
+            <div class="profile-card-avatar">AP</div>
+            <div class="profile-card-name">Артём Рубцов</div>
+            <div class="profile-card-role">Ученик</div>
+        </div>
+
+        <!-- Секция 1 -->
+        <div class="menu-section">
+            <div class="menu-item">
+                <div class="menu-item-left">
+                    <div class="menu-icon-bg" style="background-color: #2c2c2e; color: #2f80ed;">🏠</div>
+                    <span>Представители</span>
+                </div>
+                <span class="chevron-right">›</span>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-left">
+                    <div class="menu-icon-bg" style="background-color: #2c2c2e; color: #8a2be2;">🔮</div>
+                    <span>Профиль Сферум</span>
+                </div>
+                <div style="display:flex; align-items:center;">
+                    <div class="dot-alert">!</div>
+                    <span class="chevron-right">›</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Секция 2 -->
+        <div class="menu-section">
+            <div class="menu-item">
+                <div class="menu-item-left">
+                    <div class="menu-icon-bg" style="background-color: #2c2c2e; color: #00ca4e;">📅</div>
+                    <span>Мероприятия</span>
+                </div>
+                <span class="chevron-right">›</span>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-left">
+                    <div class="menu-icon-bg" style="background-color: #2c2c2e; color: #ff453a;">🔔</div>
+                    <span>Уведомления</span>
+                </div>
+                <span class="chevron-right">›</span>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-left">
+                    <div class="menu-icon-bg" style="background-color: #2c2c2e; color: #bf5af2;">🟣</div>
+                    <span>Подключить Алису</span>
+                </div>
+                <span class="chevron-right">›</span>
+            </div>
+        </div>
+
+        <!-- Секция 3 -->
+        <div class="menu-section">
+            <div class="menu-item">
+                <div class="menu-item-left">
+                    <div class="menu-icon-bg" style="background-color: #2c2c2e; color: #ff9f0a;">💬</div>
+                    <span>Задать вопрос</span>
+                </div>
+                <span class="chevron-right">›</span>
+            </div>
+            <div class="menu-item">
+                <div class="menu-item-left">
+                    <div class="menu-icon-bg" style="background-color: #2c2c2e; color: #ff453a;">⚠️</div>
+                    <span>Отправить отчёт об ошибке</span>
+                </div>
+                <span class="chevron-right">›</span>
+            </div>
+        </div>
     </div>
 
-    <!-- Список уроков -->
-    <div class="schedule-container">
-        
-        <!-- УРОК 1 -->
-        <div class="lesson-card">
-            <div class="lesson-meta">
-                <span>1 урок</span>
-                <span>08:00 – 08:40</span>
-                <span>каб. 1008</span>
-            </div>
-            <h2 class="lesson-title">География</h2>
-            <div class="homework-box">
-                <span class="homework-icon">🏠</span>
-                <span class="homework-text"><b>Домашнее задание</b><br>§ 28 прочитать, вопросы устно. САМОСТОЯТЕЛЬНО (без интернета) напис...</span>
-            </div>
-            <div class="status-badge">Н</div>
-        </div>
 
-        <!-- ПЕРЕМЕНА -->
-        <div class="recess-line">
-            <span class="recess-title">🏃 Перемена 10 минут</span>
-            <span>08:40–08:50</span>
-        </div>
-
-        <!-- УРОК 2 -->
-        <div class="lesson-card">
-            <div class="lesson-meta">
-                <span>2 урок</span>
-                <span>08:50 – 09:30</span>
-                <span>каб. 1007</span>
-            </div>
-            <h2 class="lesson-title">Литература</h2>
-            <div class="homework-box">
-                <span class="homework-icon">🏠</span>
-                <span class="homework-text">Домашнее задание не задано</span>
-            </div>
-            <div class="status-badge">Н</div>
-        </div>
-
-        <!-- ПЕРЕМЕНА -->
-        <div class="recess-line">
-            <span class="recess-title">🏃 Перемена 20 минут</span>
-            <span>09:30–09:50</span>
-        </div>
-
-        <!-- УРОК 3 -->
-        <div class="lesson-card">
-            <div class="lesson-meta">
-                <span>3 урок</span>
-                <span>09:50 – 10:30</span>
-                <span>каб. 3024</span>
-            </div>
-            <h2 class="lesson-title">Математика</h2>
-            <div class="homework-box">
-                <span class="homework-icon">🏠</span>
-                <span class="homework-text">Домашнее задание не задано</span>
-            </div>
-            <div class="status-badge">Н</div>
-        </div>
-
-    </div>
-
-    <!-- Нижнее меню навигации -->
+    <!-- ================= СИСТЕМНЫЙ NAV БАР ================= -->
     <div class="bottom-nav">
-        <button class="nav-item active">
-            <span class="nav-icon">📋</span>
-            <span>Расписание</span>
+        <button class="nav-item active" onclick="switchMainScreen('schedule', this)">
+            <span class="nav-icon">🔀</span><span>Расписание</span>
         </button>
-        <button class="nav-item">
-            <span class="nav-icon">⭐</span>
-            <span>Оценки</span>
+        <button class="nav-item" onclick="switchMainScreen('grades', this)">
+            <span class="nav-icon">⭐</span><span>Оценки</span>
         </button>
-        <button class="nav-item">
-            <span class="nav-icon">✅</span>
-            <span>Задания</span>
-        </button>
-        <button class="nav-item">
-            <span class="nav-icon">🏫</span>
-            <span>Школа</span>
-        </button>
-        <button class="nav-item">
-            <span class="nav-icon">👤</span>
-            <span>Профиль</span>
+        <button class="nav-item"><span class="nav-icon">✅</span><span>Задания</span></button>
+        <button class="nav-item"><span class="nav-icon">🏫</span><span>Школа</span></button>
+        <button class="nav-item" onclick="switchMainScreen('profile', this)">
+            <span class="nav-icon">👤</span><span>Профиль</span>
         </button>
     </div>
 
+
+    <!-- ================= СКРИПТ УПРАВЛЕНИЯ ИДЕНТИЧНЫМИ ДАННЫМИ ================= -->
+    <script>
+        const diaryData = {
+            "пн": [
+                { num: 1, time: "08:00 – 08:40", room: "каб. 104", title: "Математика", hw: "Повторить свойства сложения." },
+                { num: 2, time: "08:50 – 09:30", room: "каб. 202", title: "Русский язык", hw: "Упражнение №12, правила разбора." },
+                { num: 3, time: "09:50 – 10:30", room: "Спортзал", title: "Физическая культура", hw: "Принести форму." }
+            ],
+            "вт": [
+                { num: 1, time: "08:00 – 08:40", room: "каб. 1008", title: "География", hw: "§ 28 прочитать, вопросы устно. САМОСТОЯТЕЛЬНО написать отчет." },
+                { num: 2, time: "08:50 – 09:30", room: "каб. 1007", title: "Литература", hw: "Домашнее задание не задано" },
+                { num: 3, time: "09:50 – 10:30", room: "каб. 3024", title: "Математика", hw: "Домашнее задание не задано" }
+            ],
+            "ср": [{ num: 1, time: "08:00 – 08:40", room: "каб. 210", title: "История", hw: "Параграф 3." }],
+            "чт": [{ num: 1, time: "08:00 – 08:40", room: "каб. 305", title: "Биология", hw: "Изучить строение листа." }],
+            "пт": [{ num: 1, time: "08:00 – 08:40", room: "каб. 108", title: "Английский", hw: "Слова на стр 45." }],
+            "сб": [], "вс": []
+        };
+
+        function renderDay(dayCode) {
+            const container = document.getElementById("lessons-box");
+            container.innerHTML = "";
+            const lessons = diaryData[dayCode];
+
+            if (!lessons || lessons.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:var(--text-secondary); margin-top:40px;">Выходной день</div>`;
+                return;
+            }
+
+            lessons.forEach((lesson, index) => {
+                const card = document.createElement("div");
+                card.className = "lesson-card";
+                card.innerHTML = `
+                    <div class="lesson-meta"><span>${lesson.num} урок</span><span>${lesson.time}</span><span>${lesson.room}</span></div>
+                    <h2 class="lesson-title">${lesson.title}</h2>
+                    <div class="homework-box"><span>🏠</span><div><b>Домашнее задание</b><br>${lesson.hw}</div></div>
+                `;
+                container.appendChild(card);
+
+                if (index < lessons.length - 1) {
+                    const recess = document.createElement("div");
+                    recess.className = "recess-line";
+                    recess.innerHTML = `<span>🏃 Перемена 10 минут</span><span>08:40–08:50</span>`;
+                    container.appendChild(recess);
+                }
+            });
+        }
+
+        function selectDay(dayCode, element) {
+            document.querySelectorAll(".day-column").forEach(el => el.classList.remove("active"));
+            element.classList.add("active");
+            renderDay(dayCode);
+        }
+
+        function switchMainScreen(screenName, btn) {
+            document.querySelectorAll(".bottom-nav .nav-item").forEach(el => el.classList.remove("active"));
+            btn.classList.add("active");
+            document.querySelectorAll(".app-screen").forEach(el => el.classList.remove("active"));
+            document.getElementById("screen-" + screenName).classList.add("active");
+        }
+
+        renderDay("вт"); // Стартуем со Вторника (как на первом скрине)
+    </script>
 </body>
 </html>
