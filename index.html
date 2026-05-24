@@ -1,107 +1,124 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кибер-Портал с Озвучкой</title>
+    <title>МАХАКАКАХА.КОМ — Все о Маше</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, #11001c, #240046, #3c096c);
             color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-content: center;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.5rem;
+        .domain-badge {
+            background: #ff007f;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             margin-bottom: 10px;
-            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            text-align: center;
+            background: linear-gradient(45deg, #ff007f, #ffaa00);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-
-        p {
-            color: #a0aec0;
-            margin-bottom: 30px;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        textarea {
-            width: 100%;
-            height: 100px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 2px solid #4facfe;
-            border-radius: 10px;
-            padding: 15px;
-            color: #fff;
-            font-size: 1rem;
-            resize: none;
-            outline: none;
-            transition: 0.3s;
-        }
-
-        textarea:focus {
-            box-shadow: 0 0 15px #00f2fe;
-        }
-
-        .controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .control-item {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        label {
-            font-size: 0.85rem;
-            color: #a0aec0;
             margin-bottom: 5px;
         }
 
-        select, input[type="range"] {
-            width: 100%;
-            padding: 8px;
-            background: #203a43;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            color: #fff;
-            outline: none;
+        .subtitle {
+            color: #e0aaff;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            text-align: center;
         }
 
-        .btn {
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #00f2fe;
+            border-bottom: 2px solid rgba(0, 242, 254, 0.2);
+            padding-bottom: 10px;
+        }
+
+        /* Интерактивные цитаты Маши */
+        .masha-quotes {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .quote-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .quote-btn:hover {
+            background: linear-gradient(135deg, #ff007f, #7b2cbf);
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 0, 127, 0.4);
+        }
+
+        /* Генератор фактов */
+        .fact-box {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 12px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 20px;
+            font-style: italic;
+            color: #ffaa00;
+            border-left: 4px solid #ffaa00;
+        }
+
+        .action-btn {
             background: linear-gradient(45deg, #00f2fe, #4facfe);
             border: none;
             padding: 15px 30px;
@@ -111,99 +128,116 @@
             border-radius: 50px;
             cursor: pointer;
             width: 100%;
+            transition: 0.3s;
             box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
-            transition: 0.3s ease;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
+        .action-btn:hover {
             box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
+            transform: scale(1.02);
         }
 
-        .btn:active {
-            transform: translateY(1px);
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        /* Настройки голоса */
+        .voice-settings {
             margin-top: 20px;
-        }
-
-        .sound-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
             border-radius: 10px;
-            cursor: pointer;
-            transition: 0.2s;
         }
 
-        .sound-card:hover {
-            background: rgba(79, 172, 254, 0.1);
-            border-color: #4facfe;
+        select {
+            background: #240046;
+            color: white;
+            border: 1px solid #00f2fe;
+            padding: 5px 10px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        footer {
+            margin-top: 5px;
+            color: #6a0dad;
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Говорящий ИИ-Сайт</h1>
-    <p>Напишите текст, настройте параметры и нажмите кнопку</p>
+    <div class="domain-badge">МАХАКАКАХА.КОМ</div>
+    <header>
+        <h1>Официальный Сайт про Машу</h1>
+        <div class="subtitle">Главный портал машеведения и машелогии ✨</div>
+    </header>
 
-    <div class="input-group">
-        <textarea id="text-to-speak">Привет! Я твой новый крутой сайт с полноценной озвучкой текста. Напиши здесь что-нибудь другое, и я прочитаю это вслух!</textarea>
-    </div>
+    <div class="main-grid">
+        <!-- Блок 1: Говорящие цитаты -->
+        <div class="card">
+            <h2>📢 Звуковые цитаты Маши</h2>
+            <p style="margin-bottom: 15px; color: #a0aec0;">Нажмите на любую карточку, чтобы сайт озвучил ее вслух:</p>
+            <div class="masha-quotes">
+                <button class="quote-btn" onclick="speak('Привет! Я Маша, и этот сайт создан специально в мою честь. Добро пожаловать!')">
+                    👋 Приветствие Маши
+                </button>
+                <button class="quote-btn" onclick="speak('Так, ну-ка быстро оставили все свои дела и похвалили Машу. Время пришло!')">
+                    👑 Маша требует внимания
+                </button>
+                <button class="quote-btn" onclick="speak('Я не капризничаю, я просто харизматично отстаиваю свои личные границы!')">
+                    😏 Фирменная отмазка
+                </button>
+                <button class="quote-btn" onclick="speak('В любой непонятной ситуации — иди кушать или ложись спать. Это золотое правило.')">
+                    🍕 Мудрый совет
+                </button>
+            </div>
+        </div>
 
-    <div class="controls">
-        <div class="control-item">
-            <label for="voice-select">Голос (Язык):</label>
+        <!-- Блок 2: Генератор случайных фактов -->
+        <div class="card">
+            <h2>🔮 Случайный факт о Маше</h2>
+            <div class="fact-box" id="fact-container">Нажмите на кнопку ниже, чтобы узнать чистую правду о Маше...</div>
+            <button class="action-btn" onclick="generateFact()">Сгенерировать и озвучить факт</button>
+        </div>
+
+        <!-- Настройки голоса -->
+        <div class="voice-settings">
+            <label for="voice-select">⚙️ Настройка голоса:</label>
             <select id="voice-select"></select>
         </div>
-        <div class="control-item">
-            <label for="rate">Скорость речи:</label>
-            <input type="range" id="rate" min="0.5" max="2" value="1" step="0.1">
-        </div>
     </div>
 
-    <button class="btn" id="speak-btn">ОЗВУЧИТЬ ТЕКСТ</button>
-
-    <div class="card-grid">
-        <div class="sound-card" onclick="quickSpeak('Добро пожаловать на наш секретный портал!')">
-            👋 Приветствие
-        </div>
-        <div class="sound-card" onclick="quickSpeak('Внимание! Зафиксирована хакерская атака. Шучу, всё в порядке.')">
-            ⚠️ Тревога
-        </div>
-    </div>
-</div>
+    <footer style="margin-top: 40px; text-align: center; color: #a0aec0;">
+        <p>© 2026 Махакакаха.ком. Все права защищены Машей.</p>
+    </footer>
 
 <script>
     const synth = window.speechSynthesis;
-    const textInput = document.getElementById('text-to-speak');
     const voiceSelect = document.getElementById('voice-select');
-    const rateInput = document.getElementById('rate');
-    const speakBtn = document.getElementById('speak-btn');
-
     let voices = [];
 
-    // Загрузка доступных голосов в системе
+    const mashaFacts = [
+        "Маша — это не просто имя, это синоним к слову великолепность.",
+        "Научно доказано: если Маша улыбается, продуктивность всех людей вокруг возрастает на сто процентов.",
+        "У Маши врожденный иммунитет к плохому настроению, но иногда она любит погрустить для драмы.",
+        "Маша планирует захватить этот мир, но ей пока лень вставать с кровати.",
+        "Если Маша говорит, что будет готова через 5 минут, значит каждые полчаса этот счетчик сбрасывается.",
+        "Маша способна уничтожить коробку конфет со скоростью звука.",
+        "Секретный супернавык Маши — находить самые уютные места в любой комнате."
+    ];
+
     function populateVoiceList() {
         voices = synth.getVoices();
         voiceSelect.innerHTML = '';
-        
         voices.forEach((voice) => {
-            const option = document.createElement('option');
-            option.textContent = `${voice.name} (${voice.lang})`;
-            option.setAttribute('data-lang', voice.lang);
-            option.setAttribute('data-name', voice.name);
-            
-            // По умолчанию выбираем русский голос, если он есть
-            if(voice.lang.includes('ru')) {
-                option.selected = true;
+            if(voice.lang.includes('ru') || voice.lang.includes('en')) {
+                const option = document.createElement('option');
+                option.textContent = `${voice.name} (${voice.lang})`;
+                option.setAttribute('data-name', voice.name);
+                if(voice.lang.includes('ru')) option.selected = true;
+                voiceSelect.appendChild(option);
             }
-            voiceSelect.appendChild(option);
         });
     }
 
@@ -212,43 +246,26 @@
         speechSynthesis.onvoiceschanged = populateVoiceList;
     }
 
-    // Функция озвучки основного текста
-    function speak() {
-        if (synth.speaking) {
-            synth.cancel(); // Если уже говорит, прерываем
-        }
-        
-        if (textInput.value !== '') {
-            const utterThis = new SpeechSynthesisUtterance(textInput.value);
-            
-            const selectedVoiceName = voiceSelect.selectedOptions[0].getAttribute('data-name');
-            voices.forEach((voice) => {
-                if(voice.name === selectedVoiceName) {
-                    utterThis.voice = voice;
-                }
-            });
-
-            utterThis.rate = rateInput.value;
-            synth.speak(utterThis);
-        }
-    }
-
-    // Быстрая озвучка для интерактивных карточек
-    function quickSpeak(text) {
+    function speak(text) {
         if (synth.speaking) synth.cancel();
+        
         const utterThis = new SpeechSynthesisUtterance(text);
         const selectedVoiceName = voiceSelect.selectedOptions[0]?.getAttribute('data-name');
         
-        if(selectedVoiceName) {
-            voices.forEach((voice) => {
-                if(voice.name === selectedVoiceName) utterThis.voice = voice;
-            });
-        }
-        utterThis.rate = rateInput.value;
+        voices.forEach((voice) => {
+            if(voice.name === selectedVoiceName) utterThis.voice = voice;
+        });
+        
+        utterThis.rate = 1.0;
         synth.speak(utterThis);
     }
 
-    speakBtn.addEventListener('click', speak);
+    function generateFact() {
+        const randomIndex = Math.floor(Math.random() * mashaFacts.length);
+        const fact = mashaFacts[randomIndex];
+        document.getElementById('fact-container').innerText = fact;
+        speak(fact);
+    }
 </script>
 
 </body>
