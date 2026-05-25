@@ -3,271 +3,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>СОНЯ.NET — Официальный Сонь-Центр</title>
+    <title>Голосовой ИИ — Профессиональная Озвучка</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #0b132b, #1c2541, #3a506b);
-            color: #ffffff;
+            background: linear-gradient(135deg, #0d1117, #161b22);
+            color: #c9d1d9;
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
-        .domain-badge {
-            background: #00b4d8;
-            color: #0b132b;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-            box-shadow: 0 0 15px rgba(0, 180, 216, 0.5);
+        .app-container {
+            background: #21262d;
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 650px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
-        header h1 {
-            font-size: 3rem;
-            text-align: center;
-            background: linear-gradient(45deg, #00f5d4, #00b4d8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        h1 {
+            font-size: 1.8rem;
+            color: #f0f6fc;
             margin-bottom: 5px;
+            text-align: center;
         }
 
         .subtitle {
-            color: #90e0ef;
-            font-size: 1.2rem;
-            margin-bottom: 40px;
+            font-size: 0.9rem;
+            color: #8b949e;
             text-align: center;
+            margin-bottom: 25px;
         }
 
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            max-width: 800px;
-            width: 100%;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        }
-
-        h2 {
-            font-size: 1.5rem;
+        .textarea-wrapper {
+            position: relative;
             margin-bottom: 20px;
-            color: #00f5d4;
-            border-bottom: 2px solid rgba(0, 245, 212, 0.2);
-            padding-bottom: 10px;
         }
 
-        /* Интерактивные цитаты Сони */
-        .sonya-quotes {
+        textarea {
+            width: 100%;
+            height: 150px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 15px;
+            color: #c9d1d9;
+            font-size: 1rem;
+            resize: none;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        textarea:focus {
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+        }
+
+        .char-count {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 0.8rem;
+            color: #8b949e;
+        }
+
+        .settings-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            margin-bottom: 25px;
         }
 
-        .quote-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            text-align: left;
+        .full-width {
+            grid-column: span 2;
         }
 
-        .quote-btn:hover {
-            background: linear-gradient(135deg, #00b4d8, #0077b6);
-            border-color: transparent;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 180, 216, 0.4);
-        }
-
-        /* Генератор фактов */
-        .fact-box {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 20px;
-            border-radius: 12px;
-            min-height: 60px;
+        .control-group {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin-bottom: 20px;
-            font-style: italic;
-            color: #00f5d4;
-            border-left: 4px solid #00f5d4;
+            flex-direction: column;
+            gap: 5px;
         }
 
-        .action-btn {
-            background: linear-gradient(45deg, #00f5d4, #00b4d8);
-            border: none;
-            padding: 15px 30px;
-            color: #0b132b;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 245, 212, 0.4);
-        }
-
-        .action-btn:hover {
-            box-shadow: 0 6px 20px rgba(0, 180, 216, 0.6);
-            transform: scale(1.02);
-        }
-
-        /* Настройки голоса */
-        .voice-settings {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0,0,0,0.2);
-            padding: 10px;
-            border-radius: 10px;
+        label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8b949e;
         }
 
         select {
-            background: #1c2541;
-            color: white;
-            border: 1px solid #00f5d4;
-            padding: 5px 10px;
-            border-radius: 5px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 10px;
+            color: #c9d1d9;
+            font-size: 0.95rem;
             outline: none;
+            width: 100%;
+            cursor: pointer;
         }
 
-        footer {
-            margin-top: 5px;
-            color: #5c677d;
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #161b22;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+        }
+
+        input[type="range"] {
+            flex-grow: 1;
+            accent-color: #58a6ff;
+            cursor: pointer;
+        }
+
+        .slider-value {
             font-size: 0.85rem;
+            min-width: 30px;
+            text-align: right;
+            color: #f0f6fc;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: filter 0.2s, transform 0.1s;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-primary {
+            background-color: #238636;
+            color: #ffffff;
+            flex-grow: 2;
+        }
+
+        .btn-primary:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-danger {
+            background-color: #da3637;
+            color: #ffffff;
+            padding: 14px;
+        }
+
+        .btn-danger:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-secondary {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #58a6ff;
+            flex-grow: 1;
+        }
+
+        .btn-secondary:hover {
+            background-color: #30363d;
+        }
+
+        .btn:disabled {
+            background-color: #30363d;
+            color: #8b949e;
+            border: none;
+            cursor: not-allowed;
         }
     </style>
 </head>
 <body>
 
-    <div class="domain-badge">СОНЯ.NET</div>
-    <header>
-        <h1>Главный Портал про Соню</h1>
-        <div class="subtitle">Официальное представительство Сони во Вселенной 🚀</div>
-    </header>
+<div class="app-container">
+    <h1>Голосовой ИИ-Движок</h1>
+    <div class="subtitle">Студия озвучки текста в реальном времени</div>
 
-    <div class="main-grid">
-        <!-- Блок 1: Говорящие цитаты -->
-        <div class="card">
-            <h2>📢 Говорящие цитаты Сони</h2>
-            <p style="margin-bottom: 15px; color: #a0aec0;">Кликните по карточке, чтобы услышать Соню:</p>
-            <div class="sonya-quotes">
-                <button class="quote-btn" onclick="speak('Привет всем! Я Соня, и вы находитесь на моём лучшем личном сайте соня точка нет. Рада вас видеть!')">
-                    ✨ Приветствие Сони
-                </button>
-                <button class="quote-btn" onclick="speak('Тише, тише. Гениальные мысли требуют идеальной тишины. Дайте Соне подумать.')">
-                    🤫 Режим гения
-                </button>
-                <button class="quote-btn" onclick="speak('Я не спорю, я просто детально объясняю, почему я абсолютно права в этой ситуации.')">
-                    🔥 Железный аргумент
-                </button>
-                <button class="quote-btn" onclick="speak('Мой главный секрет успеха прост: побольше спать, поменьше переживать из-за ерунды.')">
-                    🧘 Философия жизни
-                </button>
+    <div class="textarea-wrapper">
+        <textarea id="text-input" placeholder="Введите или вставьте сюда текст для озвучки..." maxlength="1000">Привет! Это профессиональный веб-интерфейс для генерации речи. Вы можете настроить скорость, тембр и сохранить готовый файл.</textarea>
+        <div class="char-count" id="char-counter">0 / 1000</div>
+    </div>
+
+    <div class="settings-grid">
+        <div class="control-group full-width">
+            <label for="voice-select">🎙️ Выберите доступный голос и язык:</label>
+            <select id="voice-select">
+                <option value="">Загрузка доступных голосов...</option>
+            </select>
+        </div>
+
+        <div class="control-group">
+            <label for="rate">⚡ Скорость речи:</label>
+            <div class="slider-container">
+                <input type="range" id="rate" min="0.5" max="2.5" step="0.1" value="1">
+                <span class="slider-value" id="rate-val">1.0x</span>
             </div>
         </div>
 
-        <!-- Блок 2: Генератор случайных фактов -->
-        <div class="card">
-            <h2>🔮 Случайный факт о Соне</h2>
-            <div class="fact-box" id="fact-container">Нажмите на кнопку ниже, чтобы узнать секретное досье на Соню...</div>
-            <button class="action-btn" onclick="generateFact()">Сгенерировать и озвучить факт</button>
-        </div>
-
-        <!-- Настройки голоса -->
-        <div class="voice-settings">
-            <label for="voice-select">⚙️ Выбрать голос:</label>
-            <select id="voice-select"></select>
+        <div class="control-group">
+            <label for="pitch">🎼 Высота тона (Тембр):</label>
+            <div class="slider-container">
+                <input type="range" id="pitch" min="0.5" max="1.5" step="0.1" value="1">
+                <span class="slider-value" id="pitch-val">1.0</span>
+            </div>
         </div>
     </div>
 
-    <footer style="margin-top: 40px; text-align: center; color: #a0aec0;">
-        <p>© 2026 Соня.net. Все права защищены Соней лично.</p>
-    </footer>
+    <div class="buttons-container">
+        <button class="btn btn-danger" id="stop-btn" title="Остановить">⏹️</button>
+        <button class="btn btn-primary" id="speak-btn">🔊 Озвучить сейчас</button>
+        <button class="btn btn-secondary" id="download-btn">📥 Скачать аудио (WAV)</button>
+    </div>
+</div>
 
 <script>
     const synth = window.speechSynthesis;
+    const textInput = document.getElementById('text-input');
     const voiceSelect = document.getElementById('voice-select');
+    const rateInput = document.getElementById('rate');
+    const pitchInput = document.getElementById('pitch');
+    const rateVal = document.getElementById('rate-val');
+    const pitchVal = document.getElementById('pitch-val');
+    const charCounter = document.getElementById('char-counter');
+    
+    const speakBtn = document.getElementById('speak-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const downloadBtn = document.getElementById('download-btn');
+
     let voices = [];
 
-    // База убойных фактов о Соне
-    const sonyaFacts = [
-        "Соня способна генерировать гениальные идеи со скоростью три штуки в секунду.",
-        "Уровень обаяния Сони официально зашкаливает и не поддается никаким научным измерениям.",
-        "Если Соня молчит — это не значит, что ей нечего сказать. Она просто просчитывает траекторию захвата галактики.",
-        "Научный факт: Соня может спать в любой позе, в любом месте и при любом уровне шума.",
-        "Секретное оружие Сони — это её убийственный взгляд, перед которым невозможно устоять.",
-        "Соня всегда знает, где продается самый вкусный кофе и лучшие вкусняшки.",
-        "Когда Соне лень что-то делать, это называется не прокрастинация, а энергосберегающий режим."
-    ];
+    // Обновление счетчика символов
+    function updateCharCount() {
+        charCounter.textContent = `${textInput.value.length} / 1000`;
+    }
+    textInput.addEventListener('input', updateCharCount);
+    updateCharCount();
 
-    function populateVoiceList() {
+    // Синхронизация ползунков с цифрами
+    rateInput.addEventListener('input', () => rateVal.textContent = `${rateInput.value}x`);
+    pitchInput.addEventListener('input', () => pitchVal.textContent = pitchInput.value);
+
+    // Подгрузка голосов операционной системы (Google, Microsoft, Apple)
+    function loadVoices() {
         voices = synth.getVoices();
         voiceSelect.innerHTML = '';
+        
+        if (voices.length === 0) {
+            const option = document.createElement('option');
+            option.textContent = "Голоса не найдены. Попробуйте обновить страницу.";
+            voiceSelect.appendChild(option);
+            return;
+        }
+
+        // Сортируем: сначала русский, потом английский, потом остальные
+        voices.sort((a, b) => {
+            if (a.lang.includes('ru') && !b.lang.includes('ru')) return -1;
+            if (!a.lang.includes('ru') && b.lang.includes('ru')) return 1;
+            return a.lang.localeCompare(b.lang);
+        });
+
         voices.forEach((voice) => {
-            if(voice.lang.includes('ru') || voice.lang.includes('en')) {
-                const option = document.createElement('option');
-                option.textContent = `${voice.name} (${voice.lang})`;
-                option.setAttribute('data-name', voice.name);
-                if(voice.lang.includes('ru')) option.selected = true;
-                voiceSelect.appendChild(option);
-            }
+            const option = document.createElement('option');
+            option.textContent = `${voice.name} (${voice.lang})`;
+            option.setAttribute('data-name', voice.name);
+            option.setAttribute('data-lang', voice.lang);
+            voiceSelect.appendChild(option);
         });
     }
 
-    populateVoiceList();
+    loadVoices();
     if (speechSynthesis.onvoiceschanged !== undefined) {
-        speechSynthesis.onvoiceschanged = populateVoiceList;
+        speechSynthesis.onvoiceschanged = loadVoices;
     }
 
-    function speak(text) {
+    // Запуск озвучки
+    function speak() {
         if (synth.speaking) synth.cancel();
+
+        if (textInput.value.trim() === '') return;
+
+        const utterance = new SpeechSynthesisUtterance(textInput.value);
+        const selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
         
-        const utterThis = new SpeechSynthesisUtterance(text);
-        const selectedVoiceName = voiceSelect.selectedOptions?.getAttribute('data-name');
-        
-        voices.forEach((voice) => {
-            if(voice.name === selectedVoiceName) utterThis.voice = voice;
-        });
-        
-        utterThis.rate = 1.0;
-        synth.speak(utterThis);
+        const targetVoice = voices.find(v => v.name === selectedOption);
+        if (targetVoice) utterance.voice = targetVoice;
+
+        utterance.rate = rateInput.value;
+        utterance.pitch = pitchInput.value;
+
+        synth.speak(utterance);
     }
 
-    function generateFact() {
-        const randomIndex = Math.floor(Math.random() * sonyaFacts.length);
-        const fact = sonyaFacts[randomIndex];
-        document.getElementById('fact-container').innerText = fact;
-        speak(fact);
-    }
-</script>
-
-</body>
-</html>
+    // Скачивание аудиофайла через экспериментальный MediaRecorder (Запись системного аудио)
+    // Работает через захват звукового потока синтезатора, если поддерживается
+    function downloadAudio() {
+        alert("Запуск конвертации! Пожалуйста, прослушайте фразу до конца для сохранения файла.");
+        
+        const chunks = [];
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const destination = audioCtx.createMediaStreamDestination();
